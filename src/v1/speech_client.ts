@@ -25,9 +25,9 @@ import {
   ClientOptions,
   LROperation,
 } from 'google-gax';
-import * as path from 'path';
 
 import * as protos from '../../protos/protos';
+import jsonProtos = require('../../protos/protos.json');
 /**
  * Client JSON configuration object, loaded from
  * `src/v1/speech_client_config.json`.
@@ -45,6 +45,7 @@ const version = require('../../../package.json').version;
 export class SpeechClient {
   private _terminated = false;
   private _opts: ClientOptions;
+  private _providedCustomServicePath: boolean;
   private _gaxModule: typeof gax | typeof gax.fallback;
   private _gaxGrpc: gax.GrpcClient | gax.fallback.GrpcClient;
   private _protos: {};
@@ -56,6 +57,7 @@ export class SpeechClient {
     longrunning: {},
     batching: {},
   };
+  warn: (code: string, message: string, warnType?: string) => void;
   innerApiCalls: {[name: string]: Function};
   operationsClient: gax.OperationsClient;
   speechStub?: Promise<{[name: string]: Function}>;
@@ -99,6 +101,9 @@ export class SpeechClient {
     const staticMembers = this.constructor as typeof SpeechClient;
     const servicePath =
       opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
+    this._providedCustomServicePath = !!(
+      opts?.servicePath || opts?.apiEndpoint
+    );
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
     const fallback =
@@ -123,6 +128,12 @@ export class SpeechClient {
     // Save the auth object to the client, for use by other methods.
     this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
 
+    // Set useJWTAccessWithScope on the auth object.
+    this.auth.useJWTAccessWithScope = true;
+
+    // Set defaultServicePath on the auth object.
+    this.auth.defaultServicePath = staticMembers.servicePath;
+
     // Set the default scopes in auth client if needed.
     if (servicePath === staticMembers.servicePath) {
       this.auth.defaultScopes = staticMembers.scopes;
@@ -137,27 +148,14 @@ export class SpeechClient {
     }
     if (!opts.fallback) {
       clientHeader.push(`grpc/${this._gaxGrpc.grpcVersion}`);
+    } else if (opts.fallback === 'rest') {
+      clientHeader.push(`rest/${this._gaxGrpc.grpcVersion}`);
     }
     if (opts.libName && opts.libVersion) {
       clientHeader.push(`${opts.libName}/${opts.libVersion}`);
     }
     // Load the applicable protos.
-    // For Node.js, pass the path to JSON proto file.
-    // For browsers, pass the JSON content.
-
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
-    this._protos = this._gaxGrpc.loadProto(
-      opts.fallback
-        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('../../protos/protos.json')
-        : nodejsProtoPath
-    );
+    this._protos = this._gaxGrpc.loadProtoJSON(jsonProtos);
 
     // Some of the methods on this service provide streaming responses.
     // Provide descriptors for these.
@@ -167,15 +165,11 @@ export class SpeechClient {
       ),
     };
 
+    const protoFilesRoot = this._gaxModule.protobuf.Root.fromJSON(jsonProtos);
+
     // This API contains "long-running operations", which return a
     // an Operation object that allows for tracking of the operation,
     // rather than holding a request open.
-    const protoFilesRoot = opts.fallback
-      ? this._gaxModule.protobuf.Root.fromJSON(
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('../../protos/protos.json')
-        )
-      : this._gaxModule.protobuf.loadSync(nodejsProtoPath);
 
     this.operationsClient = this._gaxModule
       .lro({
@@ -210,6 +204,9 @@ export class SpeechClient {
     // of calling the API is handled in `google-gax`, with this code
     // merely providing the destination and request information.
     this.innerApiCalls = {};
+
+    // Add a warn function to the client constructor so it can be easily tested.
+    this.warn = gax.warn;
   }
 
   /**
@@ -238,7 +235,8 @@ export class SpeechClient {
           )
         : // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (this._protos as any).google.cloud.speech.v1.Speech,
-      this._opts
+      this._opts,
+      this._providedCustomServicePath
     ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
@@ -250,13 +248,14 @@ export class SpeechClient {
     ];
     for (const methodName of speechStubMethods) {
       const callPromise = this.speechStub.then(
-        stub => (...args: Array<{}>) => {
-          if (this._terminated) {
-            return Promise.reject('The client has already been closed.');
-          }
-          const func = stub[methodName];
-          return func.apply(stub, args);
-        },
+        stub =>
+          (...args: Array<{}>) => {
+            if (this._terminated) {
+              return Promise.reject('The client has already been closed.');
+            }
+            const func = stub[methodName];
+            return func.apply(stub, args);
+          },
         (err: Error | null | undefined) => () => {
           throw err;
         }
@@ -332,7 +331,7 @@ export class SpeechClient {
   // -- Service calls --
   // -------------------
   recognize(
-    request: protos.google.cloud.speech.v1.IRecognizeRequest,
+    request?: protos.google.cloud.speech.v1.IRecognizeRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -380,7 +379,7 @@ export class SpeechClient {
    * const [response] = await client.recognize(request);
    */
   recognize(
-    request: protos.google.cloud.speech.v1.IRecognizeRequest,
+    request?: protos.google.cloud.speech.v1.IRecognizeRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -439,7 +438,7 @@ export class SpeechClient {
   }
 
   longRunningRecognize(
-    request: protos.google.cloud.speech.v1.ILongRunningRecognizeRequest,
+    request?: protos.google.cloud.speech.v1.ILongRunningRecognizeRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -489,6 +488,8 @@ export class SpeechClient {
    *   process the request.
    * @param {google.cloud.speech.v1.RecognitionAudio} request.audio
    *   Required. The audio data to be recognized.
+   * @param {google.cloud.speech.v1.TranscriptOutputConfig} [request.outputConfig]
+   *   Optional. Specifies an optional destination for the recognition results.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.
@@ -503,7 +504,7 @@ export class SpeechClient {
    * const [response] = await operation.promise();
    */
   longRunningRecognize(
-    request: protos.google.cloud.speech.v1.ILongRunningRecognizeRequest,
+    request?: protos.google.cloud.speech.v1.ILongRunningRecognizeRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -594,6 +595,7 @@ export class SpeechClient {
       return this.speechStub!.then(stub => {
         this._terminated = true;
         stub.close();
+        this.operationsClient.close();
       });
     }
     return Promise.resolve();

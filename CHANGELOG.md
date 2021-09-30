@@ -4,6 +4,104 @@
 
 [1]: https://www.npmjs.com/package/@google-cloud/speech?activeTab=versions
 
+## [4.9.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.8.1...v4.9.0) (2021-09-20)
+
+
+### Features
+
+* add output_config request field ([#801](https://www.github.com/googleapis/nodejs-speech/issues/801)) ([b4f8cbf](https://www.github.com/googleapis/nodejs-speech/commit/b4f8cbff71e3cbdce4d7fb7cbe67f7065f4c6a2b))
+
+### [4.8.1](https://www.github.com/googleapis/nodejs-speech/compare/v4.8.0...v4.8.1) (2021-09-10)
+
+
+### Bug Fixes
+
+* **build:** set default branch to main ([#797](https://www.github.com/googleapis/nodejs-speech/issues/797)) ([7746ee5](https://www.github.com/googleapis/nodejs-speech/commit/7746ee5c5879b527a6565a134e3154509de94656))
+
+## [4.8.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.7.0...v4.8.0) (2021-08-23)
+
+
+### Features
+
+* turns on self-signed JWT feature flag ([#794](https://www.github.com/googleapis/nodejs-speech/issues/794)) ([8e655cd](https://www.github.com/googleapis/nodejs-speech/commit/8e655cd9efc3515bd452e3ab6349adeb9ddfd104))
+
+## [4.7.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.6.1...v4.7.0) (2021-08-19)
+
+
+### Features
+
+* Add transcript normalization ([#792](https://www.github.com/googleapis/nodejs-speech/issues/792)) ([08ed5b5](https://www.github.com/googleapis/nodejs-speech/commit/08ed5b51bda6f158d6c5709a6ca3393aa0c61c3d))
+
+### [4.6.1](https://www.github.com/googleapis/nodejs-speech/compare/v4.6.0...v4.6.1) (2021-08-17)
+
+
+### Bug Fixes
+
+* **deps:** google-gax v2.24.1 ([#790](https://www.github.com/googleapis/nodejs-speech/issues/790)) ([bd8ab29](https://www.github.com/googleapis/nodejs-speech/commit/bd8ab29d3b6480d854a8a3a23e520d09d6bdb298))
+
+## [4.6.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.5.6...v4.6.0) (2021-08-10)
+
+
+### Features
+
+* add total_billed_time response field ([#787](https://www.github.com/googleapis/nodejs-speech/issues/787)) ([171cba0](https://www.github.com/googleapis/nodejs-speech/commit/171cba0bb8f7bd12ab96f296824e0acf7a0698d7))
+
+### [4.5.6](https://www.github.com/googleapis/nodejs-speech/compare/v4.5.5...v4.5.6) (2021-08-02)
+
+
+### Bug Fixes
+
+* failing tests for LRO check methods ([#784](https://www.github.com/googleapis/nodejs-speech/issues/784)) ([08e4276](https://www.github.com/googleapis/nodejs-speech/commit/08e4276a39a74a45300041278dc3c63602971c10))
+
+### [4.5.5](https://www.github.com/googleapis/nodejs-speech/compare/v4.5.4...v4.5.5) (2021-07-21)
+
+
+### Bug Fixes
+
+* Updating WORKSPACE files to use the newest version of the Typescript generator. ([#777](https://www.github.com/googleapis/nodejs-speech/issues/777)) ([8911be0](https://www.github.com/googleapis/nodejs-speech/commit/8911be0cc600b4d16af5a809800118be07f8483b))
+
+### [4.5.4](https://www.github.com/googleapis/nodejs-speech/compare/v4.5.3...v4.5.4) (2021-07-12)
+
+
+### Bug Fixes
+
+* **deps:** google-gax v2.17.1 ([#774](https://www.github.com/googleapis/nodejs-speech/issues/774)) ([a30fb11](https://www.github.com/googleapis/nodejs-speech/commit/a30fb114f5c0cec095b1b1bd1f1678e2e3dba6fd))
+
+### [4.5.3](https://www.github.com/googleapis/nodejs-speech/compare/v4.5.2...v4.5.3) (2021-06-29)
+
+
+### Bug Fixes
+
+* **deps:** google-gax v2.17.0 with mTLS ([#772](https://www.github.com/googleapis/nodejs-speech/issues/772)) ([582e5b7](https://www.github.com/googleapis/nodejs-speech/commit/582e5b71c68be635f7ce775f06d5e7b02180fbef))
+* make request optional in all cases ([#768](https://www.github.com/googleapis/nodejs-speech/issues/768)) ([83e1b7b](https://www.github.com/googleapis/nodejs-speech/commit/83e1b7bd4cc2d6ffd95769a4a6f519ab23b9bc71))
+
+### [4.5.2](https://www.github.com/googleapis/nodejs-speech/compare/v4.5.1...v4.5.2) (2021-05-25)
+
+
+### Bug Fixes
+
+* GoogleAdsError missing using generator version after 1.3.0 ([#755](https://www.github.com/googleapis/nodejs-speech/issues/755)) ([0f612f3](https://www.github.com/googleapis/nodejs-speech/commit/0f612f3b7fa2430e3ab17dd258ad8c17e578aad9))
+
+### [4.5.1](https://www.github.com/googleapis/nodejs-speech/compare/v4.5.0...v4.5.1) (2021-05-20)
+
+
+### Bug Fixes
+
+* **deps:** require google-gax v2.12.0 ([#740](https://www.github.com/googleapis/nodejs-speech/issues/740)) ([0c9c68f](https://www.github.com/googleapis/nodejs-speech/commit/0c9c68f79eee3a9132f0cf18c44a45928da2e809))
+* use require() to load JSON protos ([#746](https://www.github.com/googleapis/nodejs-speech/issues/746)) ([689af48](https://www.github.com/googleapis/nodejs-speech/commit/689af48120572779143f16f7d1b0652bdddd931e))
+
+## [4.5.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.4.0...v4.5.0) (2021-04-29)
+
+
+### Features
+
+* Support for spoken punctuation and spoken emojis ([#737](https://www.github.com/googleapis/nodejs-speech/issues/737)) ([1a30de0](https://www.github.com/googleapis/nodejs-speech/commit/1a30de054439fc8e49eaef2c8641a507e7836c37))
+
+
+### Bug Fixes
+
+* remove common protos ([#710](https://www.github.com/googleapis/nodejs-speech/issues/710)) ([cbed1b0](https://www.github.com/googleapis/nodejs-speech/commit/cbed1b0879cd15bd4093948f2f9bde431c0236d6))
+
 ## [4.4.0](https://www.github.com/googleapis/nodejs-speech/compare/v4.3.0...v4.4.0) (2021-03-16)
 
 

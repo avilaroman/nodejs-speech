@@ -28,19 +28,21 @@ const text = 'how old is the Brooklyn Bridge';
 const adaptationClient = new speech.AdaptationClient();
 
 const projectId = process.env.GCLOUD_PROJECT;
-const location = 'us-west1'
-const customClassId = uuidv4().replace(/-/g, '').substring(0, 20);
-const phraseSetId = uuidv4().replace(/-/g, '').substring(0, 20);
+const location = 'global'
+const customClassId = `customClassId${uuidv4().replace(/-/g, '').substring(0, 8)}`;
+const phraseSetId = `phraseSetId${uuidv4().replace(/-/g, '').substring(0, 8)}`;
 const classParent = `projects/${projectId}/locations/${location}/customClasses/${customClassId}`;
-const phraseParent = `projects/${projectId}/locations/${location}/phraseSets/${customClassId}`;
+const phraseParent = `projects/${projectId}/locations/${location}/phraseSets/${phraseSetId}`;
 
 describe('modelAdaptation', () => {
     it('should run modelAdaptation', async () => {
       const stdout = execSync(`node modelAdaptation.js ${projectId} ${location} ${storageUri} ${customClassId} ${phraseSetId}`)
       assert.match(stdout, /Transcription:/ );
     });
-    // Release used resources
-    cleanUp(classParent, phraseParent);
+    after(async () => {
+      // Release used resources
+      await cleanUp(classParent, phraseParent);
+    })
 });
 
 async function cleanUp(classParent, phraseParent) {

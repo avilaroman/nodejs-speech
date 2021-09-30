@@ -428,6 +428,7 @@
                          * @interface ILongRunningRecognizeRequest
                          * @property {google.cloud.speech.v1.IRecognitionConfig|null} [config] LongRunningRecognizeRequest config
                          * @property {google.cloud.speech.v1.IRecognitionAudio|null} [audio] LongRunningRecognizeRequest audio
+                         * @property {google.cloud.speech.v1.ITranscriptOutputConfig|null} [outputConfig] LongRunningRecognizeRequest outputConfig
                          */
     
                         /**
@@ -462,6 +463,14 @@
                         LongRunningRecognizeRequest.prototype.audio = null;
     
                         /**
+                         * LongRunningRecognizeRequest outputConfig.
+                         * @member {google.cloud.speech.v1.ITranscriptOutputConfig|null|undefined} outputConfig
+                         * @memberof google.cloud.speech.v1.LongRunningRecognizeRequest
+                         * @instance
+                         */
+                        LongRunningRecognizeRequest.prototype.outputConfig = null;
+    
+                        /**
                          * Creates a new LongRunningRecognizeRequest instance using the specified properties.
                          * @function create
                          * @memberof google.cloud.speech.v1.LongRunningRecognizeRequest
@@ -489,6 +498,8 @@
                                 $root.google.cloud.speech.v1.RecognitionConfig.encode(message.config, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
                             if (message.audio != null && Object.hasOwnProperty.call(message, "audio"))
                                 $root.google.cloud.speech.v1.RecognitionAudio.encode(message.audio, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                            if (message.outputConfig != null && Object.hasOwnProperty.call(message, "outputConfig"))
+                                $root.google.cloud.speech.v1.TranscriptOutputConfig.encode(message.outputConfig, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
                             return writer;
                         };
     
@@ -528,6 +539,9 @@
                                     break;
                                 case 2:
                                     message.audio = $root.google.cloud.speech.v1.RecognitionAudio.decode(reader, reader.uint32());
+                                    break;
+                                case 4:
+                                    message.outputConfig = $root.google.cloud.speech.v1.TranscriptOutputConfig.decode(reader, reader.uint32());
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -574,6 +588,11 @@
                                 if (error)
                                     return "audio." + error;
                             }
+                            if (message.outputConfig != null && message.hasOwnProperty("outputConfig")) {
+                                var error = $root.google.cloud.speech.v1.TranscriptOutputConfig.verify(message.outputConfig);
+                                if (error)
+                                    return "outputConfig." + error;
+                            }
                             return null;
                         };
     
@@ -599,6 +618,11 @@
                                     throw TypeError(".google.cloud.speech.v1.LongRunningRecognizeRequest.audio: object expected");
                                 message.audio = $root.google.cloud.speech.v1.RecognitionAudio.fromObject(object.audio);
                             }
+                            if (object.outputConfig != null) {
+                                if (typeof object.outputConfig !== "object")
+                                    throw TypeError(".google.cloud.speech.v1.LongRunningRecognizeRequest.outputConfig: object expected");
+                                message.outputConfig = $root.google.cloud.speech.v1.TranscriptOutputConfig.fromObject(object.outputConfig);
+                            }
                             return message;
                         };
     
@@ -618,11 +642,14 @@
                             if (options.defaults) {
                                 object.config = null;
                                 object.audio = null;
+                                object.outputConfig = null;
                             }
                             if (message.config != null && message.hasOwnProperty("config"))
                                 object.config = $root.google.cloud.speech.v1.RecognitionConfig.toObject(message.config, options);
                             if (message.audio != null && message.hasOwnProperty("audio"))
                                 object.audio = $root.google.cloud.speech.v1.RecognitionAudio.toObject(message.audio, options);
+                            if (message.outputConfig != null && message.hasOwnProperty("outputConfig"))
+                                object.outputConfig = $root.google.cloud.speech.v1.TranscriptOutputConfig.toObject(message.outputConfig, options);
                             return object;
                         };
     
@@ -638,6 +665,211 @@
                         };
     
                         return LongRunningRecognizeRequest;
+                    })();
+    
+                    v1.TranscriptOutputConfig = (function() {
+    
+                        /**
+                         * Properties of a TranscriptOutputConfig.
+                         * @memberof google.cloud.speech.v1
+                         * @interface ITranscriptOutputConfig
+                         * @property {string|null} [gcsUri] TranscriptOutputConfig gcsUri
+                         */
+    
+                        /**
+                         * Constructs a new TranscriptOutputConfig.
+                         * @memberof google.cloud.speech.v1
+                         * @classdesc Represents a TranscriptOutputConfig.
+                         * @implements ITranscriptOutputConfig
+                         * @constructor
+                         * @param {google.cloud.speech.v1.ITranscriptOutputConfig=} [properties] Properties to set
+                         */
+                        function TranscriptOutputConfig(properties) {
+                            if (properties)
+                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                    if (properties[keys[i]] != null)
+                                        this[keys[i]] = properties[keys[i]];
+                        }
+    
+                        /**
+                         * TranscriptOutputConfig gcsUri.
+                         * @member {string|null|undefined} gcsUri
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @instance
+                         */
+                        TranscriptOutputConfig.prototype.gcsUri = null;
+    
+                        // OneOf field names bound to virtual getters and setters
+                        var $oneOfFields;
+    
+                        /**
+                         * TranscriptOutputConfig outputType.
+                         * @member {"gcsUri"|undefined} outputType
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @instance
+                         */
+                        Object.defineProperty(TranscriptOutputConfig.prototype, "outputType", {
+                            get: $util.oneOfGetter($oneOfFields = ["gcsUri"]),
+                            set: $util.oneOfSetter($oneOfFields)
+                        });
+    
+                        /**
+                         * Creates a new TranscriptOutputConfig instance using the specified properties.
+                         * @function create
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @static
+                         * @param {google.cloud.speech.v1.ITranscriptOutputConfig=} [properties] Properties to set
+                         * @returns {google.cloud.speech.v1.TranscriptOutputConfig} TranscriptOutputConfig instance
+                         */
+                        TranscriptOutputConfig.create = function create(properties) {
+                            return new TranscriptOutputConfig(properties);
+                        };
+    
+                        /**
+                         * Encodes the specified TranscriptOutputConfig message. Does not implicitly {@link google.cloud.speech.v1.TranscriptOutputConfig.verify|verify} messages.
+                         * @function encode
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @static
+                         * @param {google.cloud.speech.v1.ITranscriptOutputConfig} message TranscriptOutputConfig message or plain object to encode
+                         * @param {$protobuf.Writer} [writer] Writer to encode to
+                         * @returns {$protobuf.Writer} Writer
+                         */
+                        TranscriptOutputConfig.encode = function encode(message, writer) {
+                            if (!writer)
+                                writer = $Writer.create();
+                            if (message.gcsUri != null && Object.hasOwnProperty.call(message, "gcsUri"))
+                                writer.uint32(/* id 1, wireType 2 =*/10).string(message.gcsUri);
+                            return writer;
+                        };
+    
+                        /**
+                         * Encodes the specified TranscriptOutputConfig message, length delimited. Does not implicitly {@link google.cloud.speech.v1.TranscriptOutputConfig.verify|verify} messages.
+                         * @function encodeDelimited
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @static
+                         * @param {google.cloud.speech.v1.ITranscriptOutputConfig} message TranscriptOutputConfig message or plain object to encode
+                         * @param {$protobuf.Writer} [writer] Writer to encode to
+                         * @returns {$protobuf.Writer} Writer
+                         */
+                        TranscriptOutputConfig.encodeDelimited = function encodeDelimited(message, writer) {
+                            return this.encode(message, writer).ldelim();
+                        };
+    
+                        /**
+                         * Decodes a TranscriptOutputConfig message from the specified reader or buffer.
+                         * @function decode
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @static
+                         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                         * @param {number} [length] Message length if known beforehand
+                         * @returns {google.cloud.speech.v1.TranscriptOutputConfig} TranscriptOutputConfig
+                         * @throws {Error} If the payload is not a reader or valid buffer
+                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                         */
+                        TranscriptOutputConfig.decode = function decode(reader, length) {
+                            if (!(reader instanceof $Reader))
+                                reader = $Reader.create(reader);
+                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.cloud.speech.v1.TranscriptOutputConfig();
+                            while (reader.pos < end) {
+                                var tag = reader.uint32();
+                                switch (tag >>> 3) {
+                                case 1:
+                                    message.gcsUri = reader.string();
+                                    break;
+                                default:
+                                    reader.skipType(tag & 7);
+                                    break;
+                                }
+                            }
+                            return message;
+                        };
+    
+                        /**
+                         * Decodes a TranscriptOutputConfig message from the specified reader or buffer, length delimited.
+                         * @function decodeDelimited
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @static
+                         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                         * @returns {google.cloud.speech.v1.TranscriptOutputConfig} TranscriptOutputConfig
+                         * @throws {Error} If the payload is not a reader or valid buffer
+                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                         */
+                        TranscriptOutputConfig.decodeDelimited = function decodeDelimited(reader) {
+                            if (!(reader instanceof $Reader))
+                                reader = new $Reader(reader);
+                            return this.decode(reader, reader.uint32());
+                        };
+    
+                        /**
+                         * Verifies a TranscriptOutputConfig message.
+                         * @function verify
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @static
+                         * @param {Object.<string,*>} message Plain object to verify
+                         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                         */
+                        TranscriptOutputConfig.verify = function verify(message) {
+                            if (typeof message !== "object" || message === null)
+                                return "object expected";
+                            var properties = {};
+                            if (message.gcsUri != null && message.hasOwnProperty("gcsUri")) {
+                                properties.outputType = 1;
+                                if (!$util.isString(message.gcsUri))
+                                    return "gcsUri: string expected";
+                            }
+                            return null;
+                        };
+    
+                        /**
+                         * Creates a TranscriptOutputConfig message from a plain object. Also converts values to their respective internal types.
+                         * @function fromObject
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @static
+                         * @param {Object.<string,*>} object Plain object
+                         * @returns {google.cloud.speech.v1.TranscriptOutputConfig} TranscriptOutputConfig
+                         */
+                        TranscriptOutputConfig.fromObject = function fromObject(object) {
+                            if (object instanceof $root.google.cloud.speech.v1.TranscriptOutputConfig)
+                                return object;
+                            var message = new $root.google.cloud.speech.v1.TranscriptOutputConfig();
+                            if (object.gcsUri != null)
+                                message.gcsUri = String(object.gcsUri);
+                            return message;
+                        };
+    
+                        /**
+                         * Creates a plain object from a TranscriptOutputConfig message. Also converts values to other types if specified.
+                         * @function toObject
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @static
+                         * @param {google.cloud.speech.v1.TranscriptOutputConfig} message TranscriptOutputConfig
+                         * @param {$protobuf.IConversionOptions} [options] Conversion options
+                         * @returns {Object.<string,*>} Plain object
+                         */
+                        TranscriptOutputConfig.toObject = function toObject(message, options) {
+                            if (!options)
+                                options = {};
+                            var object = {};
+                            if (message.gcsUri != null && message.hasOwnProperty("gcsUri")) {
+                                object.gcsUri = message.gcsUri;
+                                if (options.oneofs)
+                                    object.outputType = "gcsUri";
+                            }
+                            return object;
+                        };
+    
+                        /**
+                         * Converts this TranscriptOutputConfig to JSON.
+                         * @function toJSON
+                         * @memberof google.cloud.speech.v1.TranscriptOutputConfig
+                         * @instance
+                         * @returns {Object.<string,*>} JSON object
+                         */
+                        TranscriptOutputConfig.prototype.toJSON = function toJSON() {
+                            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        };
+    
+                        return TranscriptOutputConfig;
                     })();
     
                     v1.StreamingRecognizeRequest = (function() {
@@ -675,11 +907,11 @@
     
                         /**
                          * StreamingRecognizeRequest audioContent.
-                         * @member {Uint8Array} audioContent
+                         * @member {Uint8Array|null|undefined} audioContent
                          * @memberof google.cloud.speech.v1.StreamingRecognizeRequest
                          * @instance
                          */
-                        StreamingRecognizeRequest.prototype.audioContent = $util.newBuffer([]);
+                        StreamingRecognizeRequest.prototype.audioContent = null;
     
                         // OneOf field names bound to virtual getters and setters
                         var $oneOfFields;
@@ -2733,19 +2965,19 @@
     
                         /**
                          * RecognitionAudio content.
-                         * @member {Uint8Array} content
+                         * @member {Uint8Array|null|undefined} content
                          * @memberof google.cloud.speech.v1.RecognitionAudio
                          * @instance
                          */
-                        RecognitionAudio.prototype.content = $util.newBuffer([]);
+                        RecognitionAudio.prototype.content = null;
     
                         /**
                          * RecognitionAudio uri.
-                         * @member {string} uri
+                         * @member {string|null|undefined} uri
                          * @memberof google.cloud.speech.v1.RecognitionAudio
                          * @instance
                          */
-                        RecognitionAudio.prototype.uri = "";
+                        RecognitionAudio.prototype.uri = null;
     
                         // OneOf field names bound to virtual getters and setters
                         var $oneOfFields;
@@ -2949,6 +3181,7 @@
                          * @memberof google.cloud.speech.v1
                          * @interface IRecognizeResponse
                          * @property {Array.<google.cloud.speech.v1.ISpeechRecognitionResult>|null} [results] RecognizeResponse results
+                         * @property {google.protobuf.IDuration|null} [totalBilledTime] RecognizeResponse totalBilledTime
                          */
     
                         /**
@@ -2974,6 +3207,14 @@
                          * @instance
                          */
                         RecognizeResponse.prototype.results = $util.emptyArray;
+    
+                        /**
+                         * RecognizeResponse totalBilledTime.
+                         * @member {google.protobuf.IDuration|null|undefined} totalBilledTime
+                         * @memberof google.cloud.speech.v1.RecognizeResponse
+                         * @instance
+                         */
+                        RecognizeResponse.prototype.totalBilledTime = null;
     
                         /**
                          * Creates a new RecognizeResponse instance using the specified properties.
@@ -3002,6 +3243,8 @@
                             if (message.results != null && message.results.length)
                                 for (var i = 0; i < message.results.length; ++i)
                                     $root.google.cloud.speech.v1.SpeechRecognitionResult.encode(message.results[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                            if (message.totalBilledTime != null && Object.hasOwnProperty.call(message, "totalBilledTime"))
+                                $root.google.protobuf.Duration.encode(message.totalBilledTime, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                             return writer;
                         };
     
@@ -3040,6 +3283,9 @@
                                     if (!(message.results && message.results.length))
                                         message.results = [];
                                     message.results.push($root.google.cloud.speech.v1.SpeechRecognitionResult.decode(reader, reader.uint32()));
+                                    break;
+                                case 3:
+                                    message.totalBilledTime = $root.google.protobuf.Duration.decode(reader, reader.uint32());
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -3085,6 +3331,11 @@
                                         return "results." + error;
                                 }
                             }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime")) {
+                                var error = $root.google.protobuf.Duration.verify(message.totalBilledTime);
+                                if (error)
+                                    return "totalBilledTime." + error;
+                            }
                             return null;
                         };
     
@@ -3110,6 +3361,11 @@
                                     message.results[i] = $root.google.cloud.speech.v1.SpeechRecognitionResult.fromObject(object.results[i]);
                                 }
                             }
+                            if (object.totalBilledTime != null) {
+                                if (typeof object.totalBilledTime !== "object")
+                                    throw TypeError(".google.cloud.speech.v1.RecognizeResponse.totalBilledTime: object expected");
+                                message.totalBilledTime = $root.google.protobuf.Duration.fromObject(object.totalBilledTime);
+                            }
                             return message;
                         };
     
@@ -3128,11 +3384,15 @@
                             var object = {};
                             if (options.arrays || options.defaults)
                                 object.results = [];
+                            if (options.defaults)
+                                object.totalBilledTime = null;
                             if (message.results && message.results.length) {
                                 object.results = [];
                                 for (var j = 0; j < message.results.length; ++j)
                                     object.results[j] = $root.google.cloud.speech.v1.SpeechRecognitionResult.toObject(message.results[j], options);
                             }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime"))
+                                object.totalBilledTime = $root.google.protobuf.Duration.toObject(message.totalBilledTime, options);
                             return object;
                         };
     
@@ -3157,6 +3417,7 @@
                          * @memberof google.cloud.speech.v1
                          * @interface ILongRunningRecognizeResponse
                          * @property {Array.<google.cloud.speech.v1.ISpeechRecognitionResult>|null} [results] LongRunningRecognizeResponse results
+                         * @property {google.protobuf.IDuration|null} [totalBilledTime] LongRunningRecognizeResponse totalBilledTime
                          */
     
                         /**
@@ -3182,6 +3443,14 @@
                          * @instance
                          */
                         LongRunningRecognizeResponse.prototype.results = $util.emptyArray;
+    
+                        /**
+                         * LongRunningRecognizeResponse totalBilledTime.
+                         * @member {google.protobuf.IDuration|null|undefined} totalBilledTime
+                         * @memberof google.cloud.speech.v1.LongRunningRecognizeResponse
+                         * @instance
+                         */
+                        LongRunningRecognizeResponse.prototype.totalBilledTime = null;
     
                         /**
                          * Creates a new LongRunningRecognizeResponse instance using the specified properties.
@@ -3210,6 +3479,8 @@
                             if (message.results != null && message.results.length)
                                 for (var i = 0; i < message.results.length; ++i)
                                     $root.google.cloud.speech.v1.SpeechRecognitionResult.encode(message.results[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                            if (message.totalBilledTime != null && Object.hasOwnProperty.call(message, "totalBilledTime"))
+                                $root.google.protobuf.Duration.encode(message.totalBilledTime, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                             return writer;
                         };
     
@@ -3248,6 +3519,9 @@
                                     if (!(message.results && message.results.length))
                                         message.results = [];
                                     message.results.push($root.google.cloud.speech.v1.SpeechRecognitionResult.decode(reader, reader.uint32()));
+                                    break;
+                                case 3:
+                                    message.totalBilledTime = $root.google.protobuf.Duration.decode(reader, reader.uint32());
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -3293,6 +3567,11 @@
                                         return "results." + error;
                                 }
                             }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime")) {
+                                var error = $root.google.protobuf.Duration.verify(message.totalBilledTime);
+                                if (error)
+                                    return "totalBilledTime." + error;
+                            }
                             return null;
                         };
     
@@ -3318,6 +3597,11 @@
                                     message.results[i] = $root.google.cloud.speech.v1.SpeechRecognitionResult.fromObject(object.results[i]);
                                 }
                             }
+                            if (object.totalBilledTime != null) {
+                                if (typeof object.totalBilledTime !== "object")
+                                    throw TypeError(".google.cloud.speech.v1.LongRunningRecognizeResponse.totalBilledTime: object expected");
+                                message.totalBilledTime = $root.google.protobuf.Duration.fromObject(object.totalBilledTime);
+                            }
                             return message;
                         };
     
@@ -3336,11 +3620,15 @@
                             var object = {};
                             if (options.arrays || options.defaults)
                                 object.results = [];
+                            if (options.defaults)
+                                object.totalBilledTime = null;
                             if (message.results && message.results.length) {
                                 object.results = [];
                                 for (var j = 0; j < message.results.length; ++j)
                                     object.results[j] = $root.google.cloud.speech.v1.SpeechRecognitionResult.toObject(message.results[j], options);
                             }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime"))
+                                object.totalBilledTime = $root.google.protobuf.Duration.toObject(message.totalBilledTime, options);
                             return object;
                         };
     
@@ -3367,6 +3655,7 @@
                          * @property {number|null} [progressPercent] LongRunningRecognizeMetadata progressPercent
                          * @property {google.protobuf.ITimestamp|null} [startTime] LongRunningRecognizeMetadata startTime
                          * @property {google.protobuf.ITimestamp|null} [lastUpdateTime] LongRunningRecognizeMetadata lastUpdateTime
+                         * @property {string|null} [uri] LongRunningRecognizeMetadata uri
                          */
     
                         /**
@@ -3409,6 +3698,14 @@
                         LongRunningRecognizeMetadata.prototype.lastUpdateTime = null;
     
                         /**
+                         * LongRunningRecognizeMetadata uri.
+                         * @member {string} uri
+                         * @memberof google.cloud.speech.v1.LongRunningRecognizeMetadata
+                         * @instance
+                         */
+                        LongRunningRecognizeMetadata.prototype.uri = "";
+    
+                        /**
                          * Creates a new LongRunningRecognizeMetadata instance using the specified properties.
                          * @function create
                          * @memberof google.cloud.speech.v1.LongRunningRecognizeMetadata
@@ -3438,6 +3735,8 @@
                                 $root.google.protobuf.Timestamp.encode(message.startTime, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                             if (message.lastUpdateTime != null && Object.hasOwnProperty.call(message, "lastUpdateTime"))
                                 $root.google.protobuf.Timestamp.encode(message.lastUpdateTime, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                            if (message.uri != null && Object.hasOwnProperty.call(message, "uri"))
+                                writer.uint32(/* id 4, wireType 2 =*/34).string(message.uri);
                             return writer;
                         };
     
@@ -3480,6 +3779,9 @@
                                     break;
                                 case 3:
                                     message.lastUpdateTime = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                                    break;
+                                case 4:
+                                    message.uri = reader.string();
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -3529,6 +3831,9 @@
                                 if (error)
                                     return "lastUpdateTime." + error;
                             }
+                            if (message.uri != null && message.hasOwnProperty("uri"))
+                                if (!$util.isString(message.uri))
+                                    return "uri: string expected";
                             return null;
                         };
     
@@ -3556,6 +3861,8 @@
                                     throw TypeError(".google.cloud.speech.v1.LongRunningRecognizeMetadata.lastUpdateTime: object expected");
                                 message.lastUpdateTime = $root.google.protobuf.Timestamp.fromObject(object.lastUpdateTime);
                             }
+                            if (object.uri != null)
+                                message.uri = String(object.uri);
                             return message;
                         };
     
@@ -3576,6 +3883,7 @@
                                 object.progressPercent = 0;
                                 object.startTime = null;
                                 object.lastUpdateTime = null;
+                                object.uri = "";
                             }
                             if (message.progressPercent != null && message.hasOwnProperty("progressPercent"))
                                 object.progressPercent = message.progressPercent;
@@ -3583,6 +3891,8 @@
                                 object.startTime = $root.google.protobuf.Timestamp.toObject(message.startTime, options);
                             if (message.lastUpdateTime != null && message.hasOwnProperty("lastUpdateTime"))
                                 object.lastUpdateTime = $root.google.protobuf.Timestamp.toObject(message.lastUpdateTime, options);
+                            if (message.uri != null && message.hasOwnProperty("uri"))
+                                object.uri = message.uri;
                             return object;
                         };
     
@@ -3609,6 +3919,7 @@
                          * @property {google.rpc.IStatus|null} [error] StreamingRecognizeResponse error
                          * @property {Array.<google.cloud.speech.v1.IStreamingRecognitionResult>|null} [results] StreamingRecognizeResponse results
                          * @property {google.cloud.speech.v1.StreamingRecognizeResponse.SpeechEventType|null} [speechEventType] StreamingRecognizeResponse speechEventType
+                         * @property {google.protobuf.IDuration|null} [totalBilledTime] StreamingRecognizeResponse totalBilledTime
                          */
     
                         /**
@@ -3652,6 +3963,14 @@
                         StreamingRecognizeResponse.prototype.speechEventType = 0;
     
                         /**
+                         * StreamingRecognizeResponse totalBilledTime.
+                         * @member {google.protobuf.IDuration|null|undefined} totalBilledTime
+                         * @memberof google.cloud.speech.v1.StreamingRecognizeResponse
+                         * @instance
+                         */
+                        StreamingRecognizeResponse.prototype.totalBilledTime = null;
+    
+                        /**
                          * Creates a new StreamingRecognizeResponse instance using the specified properties.
                          * @function create
                          * @memberof google.cloud.speech.v1.StreamingRecognizeResponse
@@ -3682,6 +4001,8 @@
                                     $root.google.cloud.speech.v1.StreamingRecognitionResult.encode(message.results[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                             if (message.speechEventType != null && Object.hasOwnProperty.call(message, "speechEventType"))
                                 writer.uint32(/* id 4, wireType 0 =*/32).int32(message.speechEventType);
+                            if (message.totalBilledTime != null && Object.hasOwnProperty.call(message, "totalBilledTime"))
+                                $root.google.protobuf.Duration.encode(message.totalBilledTime, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
                             return writer;
                         };
     
@@ -3726,6 +4047,9 @@
                                     break;
                                 case 4:
                                     message.speechEventType = reader.int32();
+                                    break;
+                                case 5:
+                                    message.totalBilledTime = $root.google.protobuf.Duration.decode(reader, reader.uint32());
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -3784,6 +4108,11 @@
                                 case 1:
                                     break;
                                 }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime")) {
+                                var error = $root.google.protobuf.Duration.verify(message.totalBilledTime);
+                                if (error)
+                                    return "totalBilledTime." + error;
+                            }
                             return null;
                         };
     
@@ -3824,6 +4153,11 @@
                                 message.speechEventType = 1;
                                 break;
                             }
+                            if (object.totalBilledTime != null) {
+                                if (typeof object.totalBilledTime !== "object")
+                                    throw TypeError(".google.cloud.speech.v1.StreamingRecognizeResponse.totalBilledTime: object expected");
+                                message.totalBilledTime = $root.google.protobuf.Duration.fromObject(object.totalBilledTime);
+                            }
                             return message;
                         };
     
@@ -3845,6 +4179,7 @@
                             if (options.defaults) {
                                 object.error = null;
                                 object.speechEventType = options.enums === String ? "SPEECH_EVENT_UNSPECIFIED" : 0;
+                                object.totalBilledTime = null;
                             }
                             if (message.error != null && message.hasOwnProperty("error"))
                                 object.error = $root.google.rpc.Status.toObject(message.error, options);
@@ -3855,6 +4190,8 @@
                             }
                             if (message.speechEventType != null && message.hasOwnProperty("speechEventType"))
                                 object.speechEventType = options.enums === String ? $root.google.cloud.speech.v1.StreamingRecognizeResponse.SpeechEventType[message.speechEventType] : message.speechEventType;
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime"))
+                                object.totalBilledTime = $root.google.protobuf.Duration.toObject(message.totalBilledTime, options);
                             return object;
                         };
     
@@ -5599,11 +5936,11 @@
     
                         /**
                          * TranscriptOutputConfig gcsUri.
-                         * @member {string} gcsUri
+                         * @member {string|null|undefined} gcsUri
                          * @memberof google.cloud.speech.v1p1beta1.TranscriptOutputConfig
                          * @instance
                          */
-                        TranscriptOutputConfig.prototype.gcsUri = "";
+                        TranscriptOutputConfig.prototype.gcsUri = null;
     
                         // OneOf field names bound to virtual getters and setters
                         var $oneOfFields;
@@ -5813,11 +6150,11 @@
     
                         /**
                          * StreamingRecognizeRequest audioContent.
-                         * @member {Uint8Array} audioContent
+                         * @member {Uint8Array|null|undefined} audioContent
                          * @memberof google.cloud.speech.v1p1beta1.StreamingRecognizeRequest
                          * @instance
                          */
-                        StreamingRecognizeRequest.prototype.audioContent = $util.newBuffer([]);
+                        StreamingRecognizeRequest.prototype.audioContent = null;
     
                         // OneOf field names bound to virtual getters and setters
                         var $oneOfFields;
@@ -6272,10 +6609,13 @@
                          * @property {number|null} [maxAlternatives] RecognitionConfig maxAlternatives
                          * @property {boolean|null} [profanityFilter] RecognitionConfig profanityFilter
                          * @property {google.cloud.speech.v1p1beta1.ISpeechAdaptation|null} [adaptation] RecognitionConfig adaptation
+                         * @property {google.cloud.speech.v1p1beta1.ITranscriptNormalization|null} [transcriptNormalization] RecognitionConfig transcriptNormalization
                          * @property {Array.<google.cloud.speech.v1p1beta1.ISpeechContext>|null} [speechContexts] RecognitionConfig speechContexts
                          * @property {boolean|null} [enableWordTimeOffsets] RecognitionConfig enableWordTimeOffsets
                          * @property {boolean|null} [enableWordConfidence] RecognitionConfig enableWordConfidence
                          * @property {boolean|null} [enableAutomaticPunctuation] RecognitionConfig enableAutomaticPunctuation
+                         * @property {google.protobuf.IBoolValue|null} [enableSpokenPunctuation] RecognitionConfig enableSpokenPunctuation
+                         * @property {google.protobuf.IBoolValue|null} [enableSpokenEmojis] RecognitionConfig enableSpokenEmojis
                          * @property {boolean|null} [enableSpeakerDiarization] RecognitionConfig enableSpeakerDiarization
                          * @property {number|null} [diarizationSpeakerCount] RecognitionConfig diarizationSpeakerCount
                          * @property {google.cloud.speech.v1p1beta1.ISpeakerDiarizationConfig|null} [diarizationConfig] RecognitionConfig diarizationConfig
@@ -6374,6 +6714,14 @@
                         RecognitionConfig.prototype.adaptation = null;
     
                         /**
+                         * RecognitionConfig transcriptNormalization.
+                         * @member {google.cloud.speech.v1p1beta1.ITranscriptNormalization|null|undefined} transcriptNormalization
+                         * @memberof google.cloud.speech.v1p1beta1.RecognitionConfig
+                         * @instance
+                         */
+                        RecognitionConfig.prototype.transcriptNormalization = null;
+    
+                        /**
                          * RecognitionConfig speechContexts.
                          * @member {Array.<google.cloud.speech.v1p1beta1.ISpeechContext>} speechContexts
                          * @memberof google.cloud.speech.v1p1beta1.RecognitionConfig
@@ -6404,6 +6752,22 @@
                          * @instance
                          */
                         RecognitionConfig.prototype.enableAutomaticPunctuation = false;
+    
+                        /**
+                         * RecognitionConfig enableSpokenPunctuation.
+                         * @member {google.protobuf.IBoolValue|null|undefined} enableSpokenPunctuation
+                         * @memberof google.cloud.speech.v1p1beta1.RecognitionConfig
+                         * @instance
+                         */
+                        RecognitionConfig.prototype.enableSpokenPunctuation = null;
+    
+                        /**
+                         * RecognitionConfig enableSpokenEmojis.
+                         * @member {google.protobuf.IBoolValue|null|undefined} enableSpokenEmojis
+                         * @memberof google.cloud.speech.v1p1beta1.RecognitionConfig
+                         * @instance
+                         */
+                        RecognitionConfig.prototype.enableSpokenEmojis = null;
     
                         /**
                          * RecognitionConfig enableSpeakerDiarization.
@@ -6517,6 +6881,12 @@
                                 $root.google.cloud.speech.v1p1beta1.SpeakerDiarizationConfig.encode(message.diarizationConfig, writer.uint32(/* id 19, wireType 2 =*/154).fork()).ldelim();
                             if (message.adaptation != null && Object.hasOwnProperty.call(message, "adaptation"))
                                 $root.google.cloud.speech.v1p1beta1.SpeechAdaptation.encode(message.adaptation, writer.uint32(/* id 20, wireType 2 =*/162).fork()).ldelim();
+                            if (message.enableSpokenPunctuation != null && Object.hasOwnProperty.call(message, "enableSpokenPunctuation"))
+                                $root.google.protobuf.BoolValue.encode(message.enableSpokenPunctuation, writer.uint32(/* id 22, wireType 2 =*/178).fork()).ldelim();
+                            if (message.enableSpokenEmojis != null && Object.hasOwnProperty.call(message, "enableSpokenEmojis"))
+                                $root.google.protobuf.BoolValue.encode(message.enableSpokenEmojis, writer.uint32(/* id 23, wireType 2 =*/186).fork()).ldelim();
+                            if (message.transcriptNormalization != null && Object.hasOwnProperty.call(message, "transcriptNormalization"))
+                                $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.encode(message.transcriptNormalization, writer.uint32(/* id 24, wireType 2 =*/194).fork()).ldelim();
                             return writer;
                         };
     
@@ -6580,6 +6950,9 @@
                                 case 20:
                                     message.adaptation = $root.google.cloud.speech.v1p1beta1.SpeechAdaptation.decode(reader, reader.uint32());
                                     break;
+                                case 24:
+                                    message.transcriptNormalization = $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.decode(reader, reader.uint32());
+                                    break;
                                 case 6:
                                     if (!(message.speechContexts && message.speechContexts.length))
                                         message.speechContexts = [];
@@ -6593,6 +6966,12 @@
                                     break;
                                 case 11:
                                     message.enableAutomaticPunctuation = reader.bool();
+                                    break;
+                                case 22:
+                                    message.enableSpokenPunctuation = $root.google.protobuf.BoolValue.decode(reader, reader.uint32());
+                                    break;
+                                case 23:
+                                    message.enableSpokenEmojis = $root.google.protobuf.BoolValue.decode(reader, reader.uint32());
                                     break;
                                 case 16:
                                     message.enableSpeakerDiarization = reader.bool();
@@ -6660,6 +7039,7 @@
                                 case 6:
                                 case 7:
                                 case 8:
+                                case 9:
                                     break;
                                 }
                             if (message.sampleRateHertz != null && message.hasOwnProperty("sampleRateHertz"))
@@ -6692,6 +7072,11 @@
                                 if (error)
                                     return "adaptation." + error;
                             }
+                            if (message.transcriptNormalization != null && message.hasOwnProperty("transcriptNormalization")) {
+                                var error = $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.verify(message.transcriptNormalization);
+                                if (error)
+                                    return "transcriptNormalization." + error;
+                            }
                             if (message.speechContexts != null && message.hasOwnProperty("speechContexts")) {
                                 if (!Array.isArray(message.speechContexts))
                                     return "speechContexts: array expected";
@@ -6710,6 +7095,16 @@
                             if (message.enableAutomaticPunctuation != null && message.hasOwnProperty("enableAutomaticPunctuation"))
                                 if (typeof message.enableAutomaticPunctuation !== "boolean")
                                     return "enableAutomaticPunctuation: boolean expected";
+                            if (message.enableSpokenPunctuation != null && message.hasOwnProperty("enableSpokenPunctuation")) {
+                                var error = $root.google.protobuf.BoolValue.verify(message.enableSpokenPunctuation);
+                                if (error)
+                                    return "enableSpokenPunctuation." + error;
+                            }
+                            if (message.enableSpokenEmojis != null && message.hasOwnProperty("enableSpokenEmojis")) {
+                                var error = $root.google.protobuf.BoolValue.verify(message.enableSpokenEmojis);
+                                if (error)
+                                    return "enableSpokenEmojis." + error;
+                            }
                             if (message.enableSpeakerDiarization != null && message.hasOwnProperty("enableSpeakerDiarization"))
                                 if (typeof message.enableSpeakerDiarization !== "boolean")
                                     return "enableSpeakerDiarization: boolean expected";
@@ -6784,6 +7179,10 @@
                             case 8:
                                 message.encoding = 8;
                                 break;
+                            case "WEBM_OPUS":
+                            case 9:
+                                message.encoding = 9;
+                                break;
                             }
                             if (object.sampleRateHertz != null)
                                 message.sampleRateHertz = object.sampleRateHertz | 0;
@@ -6809,6 +7208,11 @@
                                     throw TypeError(".google.cloud.speech.v1p1beta1.RecognitionConfig.adaptation: object expected");
                                 message.adaptation = $root.google.cloud.speech.v1p1beta1.SpeechAdaptation.fromObject(object.adaptation);
                             }
+                            if (object.transcriptNormalization != null) {
+                                if (typeof object.transcriptNormalization !== "object")
+                                    throw TypeError(".google.cloud.speech.v1p1beta1.RecognitionConfig.transcriptNormalization: object expected");
+                                message.transcriptNormalization = $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.fromObject(object.transcriptNormalization);
+                            }
                             if (object.speechContexts) {
                                 if (!Array.isArray(object.speechContexts))
                                     throw TypeError(".google.cloud.speech.v1p1beta1.RecognitionConfig.speechContexts: array expected");
@@ -6825,6 +7229,16 @@
                                 message.enableWordConfidence = Boolean(object.enableWordConfidence);
                             if (object.enableAutomaticPunctuation != null)
                                 message.enableAutomaticPunctuation = Boolean(object.enableAutomaticPunctuation);
+                            if (object.enableSpokenPunctuation != null) {
+                                if (typeof object.enableSpokenPunctuation !== "object")
+                                    throw TypeError(".google.cloud.speech.v1p1beta1.RecognitionConfig.enableSpokenPunctuation: object expected");
+                                message.enableSpokenPunctuation = $root.google.protobuf.BoolValue.fromObject(object.enableSpokenPunctuation);
+                            }
+                            if (object.enableSpokenEmojis != null) {
+                                if (typeof object.enableSpokenEmojis !== "object")
+                                    throw TypeError(".google.cloud.speech.v1p1beta1.RecognitionConfig.enableSpokenEmojis: object expected");
+                                message.enableSpokenEmojis = $root.google.protobuf.BoolValue.fromObject(object.enableSpokenEmojis);
+                            }
                             if (object.enableSpeakerDiarization != null)
                                 message.enableSpeakerDiarization = Boolean(object.enableSpeakerDiarization);
                             if (object.diarizationSpeakerCount != null)
@@ -6881,6 +7295,9 @@
                                 object.diarizationSpeakerCount = 0;
                                 object.diarizationConfig = null;
                                 object.adaptation = null;
+                                object.enableSpokenPunctuation = null;
+                                object.enableSpokenEmojis = null;
+                                object.transcriptNormalization = null;
                             }
                             if (message.encoding != null && message.hasOwnProperty("encoding"))
                                 object.encoding = options.enums === String ? $root.google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding[message.encoding] : message.encoding;
@@ -6926,6 +7343,12 @@
                                 object.diarizationConfig = $root.google.cloud.speech.v1p1beta1.SpeakerDiarizationConfig.toObject(message.diarizationConfig, options);
                             if (message.adaptation != null && message.hasOwnProperty("adaptation"))
                                 object.adaptation = $root.google.cloud.speech.v1p1beta1.SpeechAdaptation.toObject(message.adaptation, options);
+                            if (message.enableSpokenPunctuation != null && message.hasOwnProperty("enableSpokenPunctuation"))
+                                object.enableSpokenPunctuation = $root.google.protobuf.BoolValue.toObject(message.enableSpokenPunctuation, options);
+                            if (message.enableSpokenEmojis != null && message.hasOwnProperty("enableSpokenEmojis"))
+                                object.enableSpokenEmojis = $root.google.protobuf.BoolValue.toObject(message.enableSpokenEmojis, options);
+                            if (message.transcriptNormalization != null && message.hasOwnProperty("transcriptNormalization"))
+                                object.transcriptNormalization = $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.toObject(message.transcriptNormalization, options);
                             return object;
                         };
     
@@ -6953,6 +7376,7 @@
                          * @property {number} OGG_OPUS=6 OGG_OPUS value
                          * @property {number} SPEEX_WITH_HEADER_BYTE=7 SPEEX_WITH_HEADER_BYTE value
                          * @property {number} MP3=8 MP3 value
+                         * @property {number} WEBM_OPUS=9 WEBM_OPUS value
                          */
                         RecognitionConfig.AudioEncoding = (function() {
                             var valuesById = {}, values = Object.create(valuesById);
@@ -6965,6 +7389,7 @@
                             values[valuesById[6] = "OGG_OPUS"] = 6;
                             values[valuesById[7] = "SPEEX_WITH_HEADER_BYTE"] = 7;
                             values[valuesById[8] = "MP3"] = 8;
+                            values[valuesById[9] = "WEBM_OPUS"] = 9;
                             return values;
                         })();
     
@@ -8069,19 +8494,19 @@
     
                         /**
                          * RecognitionAudio content.
-                         * @member {Uint8Array} content
+                         * @member {Uint8Array|null|undefined} content
                          * @memberof google.cloud.speech.v1p1beta1.RecognitionAudio
                          * @instance
                          */
-                        RecognitionAudio.prototype.content = $util.newBuffer([]);
+                        RecognitionAudio.prototype.content = null;
     
                         /**
                          * RecognitionAudio uri.
-                         * @member {string} uri
+                         * @member {string|null|undefined} uri
                          * @memberof google.cloud.speech.v1p1beta1.RecognitionAudio
                          * @instance
                          */
-                        RecognitionAudio.prototype.uri = "";
+                        RecognitionAudio.prototype.uri = null;
     
                         // OneOf field names bound to virtual getters and setters
                         var $oneOfFields;
@@ -8285,6 +8710,7 @@
                          * @memberof google.cloud.speech.v1p1beta1
                          * @interface IRecognizeResponse
                          * @property {Array.<google.cloud.speech.v1p1beta1.ISpeechRecognitionResult>|null} [results] RecognizeResponse results
+                         * @property {google.protobuf.IDuration|null} [totalBilledTime] RecognizeResponse totalBilledTime
                          */
     
                         /**
@@ -8310,6 +8736,14 @@
                          * @instance
                          */
                         RecognizeResponse.prototype.results = $util.emptyArray;
+    
+                        /**
+                         * RecognizeResponse totalBilledTime.
+                         * @member {google.protobuf.IDuration|null|undefined} totalBilledTime
+                         * @memberof google.cloud.speech.v1p1beta1.RecognizeResponse
+                         * @instance
+                         */
+                        RecognizeResponse.prototype.totalBilledTime = null;
     
                         /**
                          * Creates a new RecognizeResponse instance using the specified properties.
@@ -8338,6 +8772,8 @@
                             if (message.results != null && message.results.length)
                                 for (var i = 0; i < message.results.length; ++i)
                                     $root.google.cloud.speech.v1p1beta1.SpeechRecognitionResult.encode(message.results[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                            if (message.totalBilledTime != null && Object.hasOwnProperty.call(message, "totalBilledTime"))
+                                $root.google.protobuf.Duration.encode(message.totalBilledTime, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                             return writer;
                         };
     
@@ -8376,6 +8812,9 @@
                                     if (!(message.results && message.results.length))
                                         message.results = [];
                                     message.results.push($root.google.cloud.speech.v1p1beta1.SpeechRecognitionResult.decode(reader, reader.uint32()));
+                                    break;
+                                case 3:
+                                    message.totalBilledTime = $root.google.protobuf.Duration.decode(reader, reader.uint32());
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -8421,6 +8860,11 @@
                                         return "results." + error;
                                 }
                             }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime")) {
+                                var error = $root.google.protobuf.Duration.verify(message.totalBilledTime);
+                                if (error)
+                                    return "totalBilledTime." + error;
+                            }
                             return null;
                         };
     
@@ -8446,6 +8890,11 @@
                                     message.results[i] = $root.google.cloud.speech.v1p1beta1.SpeechRecognitionResult.fromObject(object.results[i]);
                                 }
                             }
+                            if (object.totalBilledTime != null) {
+                                if (typeof object.totalBilledTime !== "object")
+                                    throw TypeError(".google.cloud.speech.v1p1beta1.RecognizeResponse.totalBilledTime: object expected");
+                                message.totalBilledTime = $root.google.protobuf.Duration.fromObject(object.totalBilledTime);
+                            }
                             return message;
                         };
     
@@ -8464,11 +8913,15 @@
                             var object = {};
                             if (options.arrays || options.defaults)
                                 object.results = [];
+                            if (options.defaults)
+                                object.totalBilledTime = null;
                             if (message.results && message.results.length) {
                                 object.results = [];
                                 for (var j = 0; j < message.results.length; ++j)
                                     object.results[j] = $root.google.cloud.speech.v1p1beta1.SpeechRecognitionResult.toObject(message.results[j], options);
                             }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime"))
+                                object.totalBilledTime = $root.google.protobuf.Duration.toObject(message.totalBilledTime, options);
                             return object;
                         };
     
@@ -8493,6 +8946,7 @@
                          * @memberof google.cloud.speech.v1p1beta1
                          * @interface ILongRunningRecognizeResponse
                          * @property {Array.<google.cloud.speech.v1p1beta1.ISpeechRecognitionResult>|null} [results] LongRunningRecognizeResponse results
+                         * @property {google.protobuf.IDuration|null} [totalBilledTime] LongRunningRecognizeResponse totalBilledTime
                          * @property {google.cloud.speech.v1p1beta1.ITranscriptOutputConfig|null} [outputConfig] LongRunningRecognizeResponse outputConfig
                          * @property {google.rpc.IStatus|null} [outputError] LongRunningRecognizeResponse outputError
                          */
@@ -8520,6 +8974,14 @@
                          * @instance
                          */
                         LongRunningRecognizeResponse.prototype.results = $util.emptyArray;
+    
+                        /**
+                         * LongRunningRecognizeResponse totalBilledTime.
+                         * @member {google.protobuf.IDuration|null|undefined} totalBilledTime
+                         * @memberof google.cloud.speech.v1p1beta1.LongRunningRecognizeResponse
+                         * @instance
+                         */
+                        LongRunningRecognizeResponse.prototype.totalBilledTime = null;
     
                         /**
                          * LongRunningRecognizeResponse outputConfig.
@@ -8564,6 +9026,8 @@
                             if (message.results != null && message.results.length)
                                 for (var i = 0; i < message.results.length; ++i)
                                     $root.google.cloud.speech.v1p1beta1.SpeechRecognitionResult.encode(message.results[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                            if (message.totalBilledTime != null && Object.hasOwnProperty.call(message, "totalBilledTime"))
+                                $root.google.protobuf.Duration.encode(message.totalBilledTime, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
                             if (message.outputConfig != null && Object.hasOwnProperty.call(message, "outputConfig"))
                                 $root.google.cloud.speech.v1p1beta1.TranscriptOutputConfig.encode(message.outputConfig, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
                             if (message.outputError != null && Object.hasOwnProperty.call(message, "outputError"))
@@ -8606,6 +9070,9 @@
                                     if (!(message.results && message.results.length))
                                         message.results = [];
                                     message.results.push($root.google.cloud.speech.v1p1beta1.SpeechRecognitionResult.decode(reader, reader.uint32()));
+                                    break;
+                                case 3:
+                                    message.totalBilledTime = $root.google.protobuf.Duration.decode(reader, reader.uint32());
                                     break;
                                 case 6:
                                     message.outputConfig = $root.google.cloud.speech.v1p1beta1.TranscriptOutputConfig.decode(reader, reader.uint32());
@@ -8657,6 +9124,11 @@
                                         return "results." + error;
                                 }
                             }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime")) {
+                                var error = $root.google.protobuf.Duration.verify(message.totalBilledTime);
+                                if (error)
+                                    return "totalBilledTime." + error;
+                            }
                             if (message.outputConfig != null && message.hasOwnProperty("outputConfig")) {
                                 var error = $root.google.cloud.speech.v1p1beta1.TranscriptOutputConfig.verify(message.outputConfig);
                                 if (error)
@@ -8692,6 +9164,11 @@
                                     message.results[i] = $root.google.cloud.speech.v1p1beta1.SpeechRecognitionResult.fromObject(object.results[i]);
                                 }
                             }
+                            if (object.totalBilledTime != null) {
+                                if (typeof object.totalBilledTime !== "object")
+                                    throw TypeError(".google.cloud.speech.v1p1beta1.LongRunningRecognizeResponse.totalBilledTime: object expected");
+                                message.totalBilledTime = $root.google.protobuf.Duration.fromObject(object.totalBilledTime);
+                            }
                             if (object.outputConfig != null) {
                                 if (typeof object.outputConfig !== "object")
                                     throw TypeError(".google.cloud.speech.v1p1beta1.LongRunningRecognizeResponse.outputConfig: object expected");
@@ -8721,6 +9198,7 @@
                             if (options.arrays || options.defaults)
                                 object.results = [];
                             if (options.defaults) {
+                                object.totalBilledTime = null;
                                 object.outputConfig = null;
                                 object.outputError = null;
                             }
@@ -8729,6 +9207,8 @@
                                 for (var j = 0; j < message.results.length; ++j)
                                     object.results[j] = $root.google.cloud.speech.v1p1beta1.SpeechRecognitionResult.toObject(message.results[j], options);
                             }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime"))
+                                object.totalBilledTime = $root.google.protobuf.Duration.toObject(message.totalBilledTime, options);
                             if (message.outputConfig != null && message.hasOwnProperty("outputConfig"))
                                 object.outputConfig = $root.google.cloud.speech.v1p1beta1.TranscriptOutputConfig.toObject(message.outputConfig, options);
                             if (message.outputError != null && message.hasOwnProperty("outputError"))
@@ -9050,6 +9530,7 @@
                          * @property {google.rpc.IStatus|null} [error] StreamingRecognizeResponse error
                          * @property {Array.<google.cloud.speech.v1p1beta1.IStreamingRecognitionResult>|null} [results] StreamingRecognizeResponse results
                          * @property {google.cloud.speech.v1p1beta1.StreamingRecognizeResponse.SpeechEventType|null} [speechEventType] StreamingRecognizeResponse speechEventType
+                         * @property {google.protobuf.IDuration|null} [totalBilledTime] StreamingRecognizeResponse totalBilledTime
                          */
     
                         /**
@@ -9093,6 +9574,14 @@
                         StreamingRecognizeResponse.prototype.speechEventType = 0;
     
                         /**
+                         * StreamingRecognizeResponse totalBilledTime.
+                         * @member {google.protobuf.IDuration|null|undefined} totalBilledTime
+                         * @memberof google.cloud.speech.v1p1beta1.StreamingRecognizeResponse
+                         * @instance
+                         */
+                        StreamingRecognizeResponse.prototype.totalBilledTime = null;
+    
+                        /**
                          * Creates a new StreamingRecognizeResponse instance using the specified properties.
                          * @function create
                          * @memberof google.cloud.speech.v1p1beta1.StreamingRecognizeResponse
@@ -9123,6 +9612,8 @@
                                     $root.google.cloud.speech.v1p1beta1.StreamingRecognitionResult.encode(message.results[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
                             if (message.speechEventType != null && Object.hasOwnProperty.call(message, "speechEventType"))
                                 writer.uint32(/* id 4, wireType 0 =*/32).int32(message.speechEventType);
+                            if (message.totalBilledTime != null && Object.hasOwnProperty.call(message, "totalBilledTime"))
+                                $root.google.protobuf.Duration.encode(message.totalBilledTime, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
                             return writer;
                         };
     
@@ -9167,6 +9658,9 @@
                                     break;
                                 case 4:
                                     message.speechEventType = reader.int32();
+                                    break;
+                                case 5:
+                                    message.totalBilledTime = $root.google.protobuf.Duration.decode(reader, reader.uint32());
                                     break;
                                 default:
                                     reader.skipType(tag & 7);
@@ -9225,6 +9719,11 @@
                                 case 1:
                                     break;
                                 }
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime")) {
+                                var error = $root.google.protobuf.Duration.verify(message.totalBilledTime);
+                                if (error)
+                                    return "totalBilledTime." + error;
+                            }
                             return null;
                         };
     
@@ -9265,6 +9764,11 @@
                                 message.speechEventType = 1;
                                 break;
                             }
+                            if (object.totalBilledTime != null) {
+                                if (typeof object.totalBilledTime !== "object")
+                                    throw TypeError(".google.cloud.speech.v1p1beta1.StreamingRecognizeResponse.totalBilledTime: object expected");
+                                message.totalBilledTime = $root.google.protobuf.Duration.fromObject(object.totalBilledTime);
+                            }
                             return message;
                         };
     
@@ -9286,6 +9790,7 @@
                             if (options.defaults) {
                                 object.error = null;
                                 object.speechEventType = options.enums === String ? "SPEECH_EVENT_UNSPECIFIED" : 0;
+                                object.totalBilledTime = null;
                             }
                             if (message.error != null && message.hasOwnProperty("error"))
                                 object.error = $root.google.rpc.Status.toObject(message.error, options);
@@ -9296,6 +9801,8 @@
                             }
                             if (message.speechEventType != null && message.hasOwnProperty("speechEventType"))
                                 object.speechEventType = options.enums === String ? $root.google.cloud.speech.v1p1beta1.StreamingRecognizeResponse.SpeechEventType[message.speechEventType] : message.speechEventType;
+                            if (message.totalBilledTime != null && message.hasOwnProperty("totalBilledTime"))
+                                object.totalBilledTime = $root.google.protobuf.Duration.toObject(message.totalBilledTime, options);
                             return object;
                         };
     
@@ -11639,6 +12146,446 @@
                         };
     
                         return SpeechAdaptation;
+                    })();
+    
+                    v1p1beta1.TranscriptNormalization = (function() {
+    
+                        /**
+                         * Properties of a TranscriptNormalization.
+                         * @memberof google.cloud.speech.v1p1beta1
+                         * @interface ITranscriptNormalization
+                         * @property {Array.<google.cloud.speech.v1p1beta1.TranscriptNormalization.IEntry>|null} [entries] TranscriptNormalization entries
+                         */
+    
+                        /**
+                         * Constructs a new TranscriptNormalization.
+                         * @memberof google.cloud.speech.v1p1beta1
+                         * @classdesc Represents a TranscriptNormalization.
+                         * @implements ITranscriptNormalization
+                         * @constructor
+                         * @param {google.cloud.speech.v1p1beta1.ITranscriptNormalization=} [properties] Properties to set
+                         */
+                        function TranscriptNormalization(properties) {
+                            this.entries = [];
+                            if (properties)
+                                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                    if (properties[keys[i]] != null)
+                                        this[keys[i]] = properties[keys[i]];
+                        }
+    
+                        /**
+                         * TranscriptNormalization entries.
+                         * @member {Array.<google.cloud.speech.v1p1beta1.TranscriptNormalization.IEntry>} entries
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @instance
+                         */
+                        TranscriptNormalization.prototype.entries = $util.emptyArray;
+    
+                        /**
+                         * Creates a new TranscriptNormalization instance using the specified properties.
+                         * @function create
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @static
+                         * @param {google.cloud.speech.v1p1beta1.ITranscriptNormalization=} [properties] Properties to set
+                         * @returns {google.cloud.speech.v1p1beta1.TranscriptNormalization} TranscriptNormalization instance
+                         */
+                        TranscriptNormalization.create = function create(properties) {
+                            return new TranscriptNormalization(properties);
+                        };
+    
+                        /**
+                         * Encodes the specified TranscriptNormalization message. Does not implicitly {@link google.cloud.speech.v1p1beta1.TranscriptNormalization.verify|verify} messages.
+                         * @function encode
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @static
+                         * @param {google.cloud.speech.v1p1beta1.ITranscriptNormalization} message TranscriptNormalization message or plain object to encode
+                         * @param {$protobuf.Writer} [writer] Writer to encode to
+                         * @returns {$protobuf.Writer} Writer
+                         */
+                        TranscriptNormalization.encode = function encode(message, writer) {
+                            if (!writer)
+                                writer = $Writer.create();
+                            if (message.entries != null && message.entries.length)
+                                for (var i = 0; i < message.entries.length; ++i)
+                                    $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry.encode(message.entries[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                            return writer;
+                        };
+    
+                        /**
+                         * Encodes the specified TranscriptNormalization message, length delimited. Does not implicitly {@link google.cloud.speech.v1p1beta1.TranscriptNormalization.verify|verify} messages.
+                         * @function encodeDelimited
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @static
+                         * @param {google.cloud.speech.v1p1beta1.ITranscriptNormalization} message TranscriptNormalization message or plain object to encode
+                         * @param {$protobuf.Writer} [writer] Writer to encode to
+                         * @returns {$protobuf.Writer} Writer
+                         */
+                        TranscriptNormalization.encodeDelimited = function encodeDelimited(message, writer) {
+                            return this.encode(message, writer).ldelim();
+                        };
+    
+                        /**
+                         * Decodes a TranscriptNormalization message from the specified reader or buffer.
+                         * @function decode
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @static
+                         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                         * @param {number} [length] Message length if known beforehand
+                         * @returns {google.cloud.speech.v1p1beta1.TranscriptNormalization} TranscriptNormalization
+                         * @throws {Error} If the payload is not a reader or valid buffer
+                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                         */
+                        TranscriptNormalization.decode = function decode(reader, length) {
+                            if (!(reader instanceof $Reader))
+                                reader = $Reader.create(reader);
+                            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.cloud.speech.v1p1beta1.TranscriptNormalization();
+                            while (reader.pos < end) {
+                                var tag = reader.uint32();
+                                switch (tag >>> 3) {
+                                case 1:
+                                    if (!(message.entries && message.entries.length))
+                                        message.entries = [];
+                                    message.entries.push($root.google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry.decode(reader, reader.uint32()));
+                                    break;
+                                default:
+                                    reader.skipType(tag & 7);
+                                    break;
+                                }
+                            }
+                            return message;
+                        };
+    
+                        /**
+                         * Decodes a TranscriptNormalization message from the specified reader or buffer, length delimited.
+                         * @function decodeDelimited
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @static
+                         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                         * @returns {google.cloud.speech.v1p1beta1.TranscriptNormalization} TranscriptNormalization
+                         * @throws {Error} If the payload is not a reader or valid buffer
+                         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                         */
+                        TranscriptNormalization.decodeDelimited = function decodeDelimited(reader) {
+                            if (!(reader instanceof $Reader))
+                                reader = new $Reader(reader);
+                            return this.decode(reader, reader.uint32());
+                        };
+    
+                        /**
+                         * Verifies a TranscriptNormalization message.
+                         * @function verify
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @static
+                         * @param {Object.<string,*>} message Plain object to verify
+                         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                         */
+                        TranscriptNormalization.verify = function verify(message) {
+                            if (typeof message !== "object" || message === null)
+                                return "object expected";
+                            if (message.entries != null && message.hasOwnProperty("entries")) {
+                                if (!Array.isArray(message.entries))
+                                    return "entries: array expected";
+                                for (var i = 0; i < message.entries.length; ++i) {
+                                    var error = $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry.verify(message.entries[i]);
+                                    if (error)
+                                        return "entries." + error;
+                                }
+                            }
+                            return null;
+                        };
+    
+                        /**
+                         * Creates a TranscriptNormalization message from a plain object. Also converts values to their respective internal types.
+                         * @function fromObject
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @static
+                         * @param {Object.<string,*>} object Plain object
+                         * @returns {google.cloud.speech.v1p1beta1.TranscriptNormalization} TranscriptNormalization
+                         */
+                        TranscriptNormalization.fromObject = function fromObject(object) {
+                            if (object instanceof $root.google.cloud.speech.v1p1beta1.TranscriptNormalization)
+                                return object;
+                            var message = new $root.google.cloud.speech.v1p1beta1.TranscriptNormalization();
+                            if (object.entries) {
+                                if (!Array.isArray(object.entries))
+                                    throw TypeError(".google.cloud.speech.v1p1beta1.TranscriptNormalization.entries: array expected");
+                                message.entries = [];
+                                for (var i = 0; i < object.entries.length; ++i) {
+                                    if (typeof object.entries[i] !== "object")
+                                        throw TypeError(".google.cloud.speech.v1p1beta1.TranscriptNormalization.entries: object expected");
+                                    message.entries[i] = $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry.fromObject(object.entries[i]);
+                                }
+                            }
+                            return message;
+                        };
+    
+                        /**
+                         * Creates a plain object from a TranscriptNormalization message. Also converts values to other types if specified.
+                         * @function toObject
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @static
+                         * @param {google.cloud.speech.v1p1beta1.TranscriptNormalization} message TranscriptNormalization
+                         * @param {$protobuf.IConversionOptions} [options] Conversion options
+                         * @returns {Object.<string,*>} Plain object
+                         */
+                        TranscriptNormalization.toObject = function toObject(message, options) {
+                            if (!options)
+                                options = {};
+                            var object = {};
+                            if (options.arrays || options.defaults)
+                                object.entries = [];
+                            if (message.entries && message.entries.length) {
+                                object.entries = [];
+                                for (var j = 0; j < message.entries.length; ++j)
+                                    object.entries[j] = $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry.toObject(message.entries[j], options);
+                            }
+                            return object;
+                        };
+    
+                        /**
+                         * Converts this TranscriptNormalization to JSON.
+                         * @function toJSON
+                         * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                         * @instance
+                         * @returns {Object.<string,*>} JSON object
+                         */
+                        TranscriptNormalization.prototype.toJSON = function toJSON() {
+                            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                        };
+    
+                        TranscriptNormalization.Entry = (function() {
+    
+                            /**
+                             * Properties of an Entry.
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                             * @interface IEntry
+                             * @property {string|null} [search] Entry search
+                             * @property {string|null} [replace] Entry replace
+                             * @property {boolean|null} [caseSensitive] Entry caseSensitive
+                             */
+    
+                            /**
+                             * Constructs a new Entry.
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization
+                             * @classdesc Represents an Entry.
+                             * @implements IEntry
+                             * @constructor
+                             * @param {google.cloud.speech.v1p1beta1.TranscriptNormalization.IEntry=} [properties] Properties to set
+                             */
+                            function Entry(properties) {
+                                if (properties)
+                                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                                        if (properties[keys[i]] != null)
+                                            this[keys[i]] = properties[keys[i]];
+                            }
+    
+                            /**
+                             * Entry search.
+                             * @member {string} search
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @instance
+                             */
+                            Entry.prototype.search = "";
+    
+                            /**
+                             * Entry replace.
+                             * @member {string} replace
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @instance
+                             */
+                            Entry.prototype.replace = "";
+    
+                            /**
+                             * Entry caseSensitive.
+                             * @member {boolean} caseSensitive
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @instance
+                             */
+                            Entry.prototype.caseSensitive = false;
+    
+                            /**
+                             * Creates a new Entry instance using the specified properties.
+                             * @function create
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @static
+                             * @param {google.cloud.speech.v1p1beta1.TranscriptNormalization.IEntry=} [properties] Properties to set
+                             * @returns {google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry} Entry instance
+                             */
+                            Entry.create = function create(properties) {
+                                return new Entry(properties);
+                            };
+    
+                            /**
+                             * Encodes the specified Entry message. Does not implicitly {@link google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry.verify|verify} messages.
+                             * @function encode
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @static
+                             * @param {google.cloud.speech.v1p1beta1.TranscriptNormalization.IEntry} message Entry message or plain object to encode
+                             * @param {$protobuf.Writer} [writer] Writer to encode to
+                             * @returns {$protobuf.Writer} Writer
+                             */
+                            Entry.encode = function encode(message, writer) {
+                                if (!writer)
+                                    writer = $Writer.create();
+                                if (message.search != null && Object.hasOwnProperty.call(message, "search"))
+                                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.search);
+                                if (message.replace != null && Object.hasOwnProperty.call(message, "replace"))
+                                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.replace);
+                                if (message.caseSensitive != null && Object.hasOwnProperty.call(message, "caseSensitive"))
+                                    writer.uint32(/* id 3, wireType 0 =*/24).bool(message.caseSensitive);
+                                return writer;
+                            };
+    
+                            /**
+                             * Encodes the specified Entry message, length delimited. Does not implicitly {@link google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry.verify|verify} messages.
+                             * @function encodeDelimited
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @static
+                             * @param {google.cloud.speech.v1p1beta1.TranscriptNormalization.IEntry} message Entry message or plain object to encode
+                             * @param {$protobuf.Writer} [writer] Writer to encode to
+                             * @returns {$protobuf.Writer} Writer
+                             */
+                            Entry.encodeDelimited = function encodeDelimited(message, writer) {
+                                return this.encode(message, writer).ldelim();
+                            };
+    
+                            /**
+                             * Decodes an Entry message from the specified reader or buffer.
+                             * @function decode
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @static
+                             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                             * @param {number} [length] Message length if known beforehand
+                             * @returns {google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry} Entry
+                             * @throws {Error} If the payload is not a reader or valid buffer
+                             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                             */
+                            Entry.decode = function decode(reader, length) {
+                                if (!(reader instanceof $Reader))
+                                    reader = $Reader.create(reader);
+                                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry();
+                                while (reader.pos < end) {
+                                    var tag = reader.uint32();
+                                    switch (tag >>> 3) {
+                                    case 1:
+                                        message.search = reader.string();
+                                        break;
+                                    case 2:
+                                        message.replace = reader.string();
+                                        break;
+                                    case 3:
+                                        message.caseSensitive = reader.bool();
+                                        break;
+                                    default:
+                                        reader.skipType(tag & 7);
+                                        break;
+                                    }
+                                }
+                                return message;
+                            };
+    
+                            /**
+                             * Decodes an Entry message from the specified reader or buffer, length delimited.
+                             * @function decodeDelimited
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @static
+                             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                             * @returns {google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry} Entry
+                             * @throws {Error} If the payload is not a reader or valid buffer
+                             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                             */
+                            Entry.decodeDelimited = function decodeDelimited(reader) {
+                                if (!(reader instanceof $Reader))
+                                    reader = new $Reader(reader);
+                                return this.decode(reader, reader.uint32());
+                            };
+    
+                            /**
+                             * Verifies an Entry message.
+                             * @function verify
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @static
+                             * @param {Object.<string,*>} message Plain object to verify
+                             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                             */
+                            Entry.verify = function verify(message) {
+                                if (typeof message !== "object" || message === null)
+                                    return "object expected";
+                                if (message.search != null && message.hasOwnProperty("search"))
+                                    if (!$util.isString(message.search))
+                                        return "search: string expected";
+                                if (message.replace != null && message.hasOwnProperty("replace"))
+                                    if (!$util.isString(message.replace))
+                                        return "replace: string expected";
+                                if (message.caseSensitive != null && message.hasOwnProperty("caseSensitive"))
+                                    if (typeof message.caseSensitive !== "boolean")
+                                        return "caseSensitive: boolean expected";
+                                return null;
+                            };
+    
+                            /**
+                             * Creates an Entry message from a plain object. Also converts values to their respective internal types.
+                             * @function fromObject
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @static
+                             * @param {Object.<string,*>} object Plain object
+                             * @returns {google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry} Entry
+                             */
+                            Entry.fromObject = function fromObject(object) {
+                                if (object instanceof $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry)
+                                    return object;
+                                var message = new $root.google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry();
+                                if (object.search != null)
+                                    message.search = String(object.search);
+                                if (object.replace != null)
+                                    message.replace = String(object.replace);
+                                if (object.caseSensitive != null)
+                                    message.caseSensitive = Boolean(object.caseSensitive);
+                                return message;
+                            };
+    
+                            /**
+                             * Creates a plain object from an Entry message. Also converts values to other types if specified.
+                             * @function toObject
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @static
+                             * @param {google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry} message Entry
+                             * @param {$protobuf.IConversionOptions} [options] Conversion options
+                             * @returns {Object.<string,*>} Plain object
+                             */
+                            Entry.toObject = function toObject(message, options) {
+                                if (!options)
+                                    options = {};
+                                var object = {};
+                                if (options.defaults) {
+                                    object.search = "";
+                                    object.replace = "";
+                                    object.caseSensitive = false;
+                                }
+                                if (message.search != null && message.hasOwnProperty("search"))
+                                    object.search = message.search;
+                                if (message.replace != null && message.hasOwnProperty("replace"))
+                                    object.replace = message.replace;
+                                if (message.caseSensitive != null && message.hasOwnProperty("caseSensitive"))
+                                    object.caseSensitive = message.caseSensitive;
+                                return object;
+                            };
+    
+                            /**
+                             * Converts this Entry to JSON.
+                             * @function toJSON
+                             * @memberof google.cloud.speech.v1p1beta1.TranscriptNormalization.Entry
+                             * @instance
+                             * @returns {Object.<string,*>} JSON object
+                             */
+                            Entry.prototype.toJSON = function toJSON() {
+                                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                            };
+    
+                            return Entry;
+                        })();
+    
+                        return TranscriptNormalization;
                     })();
     
                     v1p1beta1.Adaptation = (function() {
@@ -14887,43 +15834,43 @@
     
                 /**
                  * HttpRule get.
-                 * @member {string} get
+                 * @member {string|null|undefined} get
                  * @memberof google.api.HttpRule
                  * @instance
                  */
-                HttpRule.prototype.get = "";
+                HttpRule.prototype.get = null;
     
                 /**
                  * HttpRule put.
-                 * @member {string} put
+                 * @member {string|null|undefined} put
                  * @memberof google.api.HttpRule
                  * @instance
                  */
-                HttpRule.prototype.put = "";
+                HttpRule.prototype.put = null;
     
                 /**
                  * HttpRule post.
-                 * @member {string} post
+                 * @member {string|null|undefined} post
                  * @memberof google.api.HttpRule
                  * @instance
                  */
-                HttpRule.prototype.post = "";
+                HttpRule.prototype.post = null;
     
                 /**
                  * HttpRule delete.
-                 * @member {string} delete
+                 * @member {string|null|undefined} delete
                  * @memberof google.api.HttpRule
                  * @instance
                  */
-                HttpRule.prototype["delete"] = "";
+                HttpRule.prototype["delete"] = null;
     
                 /**
                  * HttpRule patch.
-                 * @member {string} patch
+                 * @member {string|null|undefined} patch
                  * @memberof google.api.HttpRule
                  * @instance
                  */
-                HttpRule.prototype.patch = "";
+                HttpRule.prototype.patch = null;
     
                 /**
                  * HttpRule custom.
@@ -25719,6 +26666,1726 @@
                 };
     
                 return Timestamp;
+            })();
+    
+            protobuf.DoubleValue = (function() {
+    
+                /**
+                 * Properties of a DoubleValue.
+                 * @memberof google.protobuf
+                 * @interface IDoubleValue
+                 * @property {number|null} [value] DoubleValue value
+                 */
+    
+                /**
+                 * Constructs a new DoubleValue.
+                 * @memberof google.protobuf
+                 * @classdesc Represents a DoubleValue.
+                 * @implements IDoubleValue
+                 * @constructor
+                 * @param {google.protobuf.IDoubleValue=} [properties] Properties to set
+                 */
+                function DoubleValue(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * DoubleValue value.
+                 * @member {number} value
+                 * @memberof google.protobuf.DoubleValue
+                 * @instance
+                 */
+                DoubleValue.prototype.value = 0;
+    
+                /**
+                 * Creates a new DoubleValue instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.DoubleValue
+                 * @static
+                 * @param {google.protobuf.IDoubleValue=} [properties] Properties to set
+                 * @returns {google.protobuf.DoubleValue} DoubleValue instance
+                 */
+                DoubleValue.create = function create(properties) {
+                    return new DoubleValue(properties);
+                };
+    
+                /**
+                 * Encodes the specified DoubleValue message. Does not implicitly {@link google.protobuf.DoubleValue.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.DoubleValue
+                 * @static
+                 * @param {google.protobuf.IDoubleValue} message DoubleValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                DoubleValue.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 1 =*/9).double(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified DoubleValue message, length delimited. Does not implicitly {@link google.protobuf.DoubleValue.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.DoubleValue
+                 * @static
+                 * @param {google.protobuf.IDoubleValue} message DoubleValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                DoubleValue.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes a DoubleValue message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.DoubleValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.DoubleValue} DoubleValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                DoubleValue.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.DoubleValue();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.double();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes a DoubleValue message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.DoubleValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.DoubleValue} DoubleValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                DoubleValue.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies a DoubleValue message.
+                 * @function verify
+                 * @memberof google.protobuf.DoubleValue
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                DoubleValue.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (typeof message.value !== "number")
+                            return "value: number expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates a DoubleValue message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.DoubleValue
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.DoubleValue} DoubleValue
+                 */
+                DoubleValue.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.DoubleValue)
+                        return object;
+                    var message = new $root.google.protobuf.DoubleValue();
+                    if (object.value != null)
+                        message.value = Number(object.value);
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from a DoubleValue message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.DoubleValue
+                 * @static
+                 * @param {google.protobuf.DoubleValue} message DoubleValue
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                DoubleValue.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        object.value = 0;
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        object.value = options.json && !isFinite(message.value) ? String(message.value) : message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this DoubleValue to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.DoubleValue
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                DoubleValue.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return DoubleValue;
+            })();
+    
+            protobuf.FloatValue = (function() {
+    
+                /**
+                 * Properties of a FloatValue.
+                 * @memberof google.protobuf
+                 * @interface IFloatValue
+                 * @property {number|null} [value] FloatValue value
+                 */
+    
+                /**
+                 * Constructs a new FloatValue.
+                 * @memberof google.protobuf
+                 * @classdesc Represents a FloatValue.
+                 * @implements IFloatValue
+                 * @constructor
+                 * @param {google.protobuf.IFloatValue=} [properties] Properties to set
+                 */
+                function FloatValue(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * FloatValue value.
+                 * @member {number} value
+                 * @memberof google.protobuf.FloatValue
+                 * @instance
+                 */
+                FloatValue.prototype.value = 0;
+    
+                /**
+                 * Creates a new FloatValue instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.FloatValue
+                 * @static
+                 * @param {google.protobuf.IFloatValue=} [properties] Properties to set
+                 * @returns {google.protobuf.FloatValue} FloatValue instance
+                 */
+                FloatValue.create = function create(properties) {
+                    return new FloatValue(properties);
+                };
+    
+                /**
+                 * Encodes the specified FloatValue message. Does not implicitly {@link google.protobuf.FloatValue.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.FloatValue
+                 * @static
+                 * @param {google.protobuf.IFloatValue} message FloatValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                FloatValue.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 5 =*/13).float(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified FloatValue message, length delimited. Does not implicitly {@link google.protobuf.FloatValue.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.FloatValue
+                 * @static
+                 * @param {google.protobuf.IFloatValue} message FloatValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                FloatValue.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes a FloatValue message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.FloatValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.FloatValue} FloatValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                FloatValue.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FloatValue();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.float();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes a FloatValue message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.FloatValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.FloatValue} FloatValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                FloatValue.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies a FloatValue message.
+                 * @function verify
+                 * @memberof google.protobuf.FloatValue
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                FloatValue.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (typeof message.value !== "number")
+                            return "value: number expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates a FloatValue message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.FloatValue
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.FloatValue} FloatValue
+                 */
+                FloatValue.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.FloatValue)
+                        return object;
+                    var message = new $root.google.protobuf.FloatValue();
+                    if (object.value != null)
+                        message.value = Number(object.value);
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from a FloatValue message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.FloatValue
+                 * @static
+                 * @param {google.protobuf.FloatValue} message FloatValue
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                FloatValue.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        object.value = 0;
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        object.value = options.json && !isFinite(message.value) ? String(message.value) : message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this FloatValue to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.FloatValue
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                FloatValue.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return FloatValue;
+            })();
+    
+            protobuf.Int64Value = (function() {
+    
+                /**
+                 * Properties of an Int64Value.
+                 * @memberof google.protobuf
+                 * @interface IInt64Value
+                 * @property {number|Long|null} [value] Int64Value value
+                 */
+    
+                /**
+                 * Constructs a new Int64Value.
+                 * @memberof google.protobuf
+                 * @classdesc Represents an Int64Value.
+                 * @implements IInt64Value
+                 * @constructor
+                 * @param {google.protobuf.IInt64Value=} [properties] Properties to set
+                 */
+                function Int64Value(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * Int64Value value.
+                 * @member {number|Long} value
+                 * @memberof google.protobuf.Int64Value
+                 * @instance
+                 */
+                Int64Value.prototype.value = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+    
+                /**
+                 * Creates a new Int64Value instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.Int64Value
+                 * @static
+                 * @param {google.protobuf.IInt64Value=} [properties] Properties to set
+                 * @returns {google.protobuf.Int64Value} Int64Value instance
+                 */
+                Int64Value.create = function create(properties) {
+                    return new Int64Value(properties);
+                };
+    
+                /**
+                 * Encodes the specified Int64Value message. Does not implicitly {@link google.protobuf.Int64Value.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.Int64Value
+                 * @static
+                 * @param {google.protobuf.IInt64Value} message Int64Value message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                Int64Value.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 0 =*/8).int64(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified Int64Value message, length delimited. Does not implicitly {@link google.protobuf.Int64Value.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.Int64Value
+                 * @static
+                 * @param {google.protobuf.IInt64Value} message Int64Value message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                Int64Value.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes an Int64Value message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.Int64Value
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.Int64Value} Int64Value
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                Int64Value.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Int64Value();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.int64();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes an Int64Value message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.Int64Value
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.Int64Value} Int64Value
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                Int64Value.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies an Int64Value message.
+                 * @function verify
+                 * @memberof google.protobuf.Int64Value
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                Int64Value.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (!$util.isInteger(message.value) && !(message.value && $util.isInteger(message.value.low) && $util.isInteger(message.value.high)))
+                            return "value: integer|Long expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates an Int64Value message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.Int64Value
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.Int64Value} Int64Value
+                 */
+                Int64Value.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.Int64Value)
+                        return object;
+                    var message = new $root.google.protobuf.Int64Value();
+                    if (object.value != null)
+                        if ($util.Long)
+                            (message.value = $util.Long.fromValue(object.value)).unsigned = false;
+                        else if (typeof object.value === "string")
+                            message.value = parseInt(object.value, 10);
+                        else if (typeof object.value === "number")
+                            message.value = object.value;
+                        else if (typeof object.value === "object")
+                            message.value = new $util.LongBits(object.value.low >>> 0, object.value.high >>> 0).toNumber();
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from an Int64Value message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.Int64Value
+                 * @static
+                 * @param {google.protobuf.Int64Value} message Int64Value
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                Int64Value.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        if ($util.Long) {
+                            var long = new $util.Long(0, 0, false);
+                            object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                        } else
+                            object.value = options.longs === String ? "0" : 0;
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (typeof message.value === "number")
+                            object.value = options.longs === String ? String(message.value) : message.value;
+                        else
+                            object.value = options.longs === String ? $util.Long.prototype.toString.call(message.value) : options.longs === Number ? new $util.LongBits(message.value.low >>> 0, message.value.high >>> 0).toNumber() : message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this Int64Value to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.Int64Value
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                Int64Value.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return Int64Value;
+            })();
+    
+            protobuf.UInt64Value = (function() {
+    
+                /**
+                 * Properties of a UInt64Value.
+                 * @memberof google.protobuf
+                 * @interface IUInt64Value
+                 * @property {number|Long|null} [value] UInt64Value value
+                 */
+    
+                /**
+                 * Constructs a new UInt64Value.
+                 * @memberof google.protobuf
+                 * @classdesc Represents a UInt64Value.
+                 * @implements IUInt64Value
+                 * @constructor
+                 * @param {google.protobuf.IUInt64Value=} [properties] Properties to set
+                 */
+                function UInt64Value(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * UInt64Value value.
+                 * @member {number|Long} value
+                 * @memberof google.protobuf.UInt64Value
+                 * @instance
+                 */
+                UInt64Value.prototype.value = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+    
+                /**
+                 * Creates a new UInt64Value instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.UInt64Value
+                 * @static
+                 * @param {google.protobuf.IUInt64Value=} [properties] Properties to set
+                 * @returns {google.protobuf.UInt64Value} UInt64Value instance
+                 */
+                UInt64Value.create = function create(properties) {
+                    return new UInt64Value(properties);
+                };
+    
+                /**
+                 * Encodes the specified UInt64Value message. Does not implicitly {@link google.protobuf.UInt64Value.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.UInt64Value
+                 * @static
+                 * @param {google.protobuf.IUInt64Value} message UInt64Value message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                UInt64Value.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified UInt64Value message, length delimited. Does not implicitly {@link google.protobuf.UInt64Value.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.UInt64Value
+                 * @static
+                 * @param {google.protobuf.IUInt64Value} message UInt64Value message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                UInt64Value.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes a UInt64Value message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.UInt64Value
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.UInt64Value} UInt64Value
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                UInt64Value.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.UInt64Value();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.uint64();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes a UInt64Value message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.UInt64Value
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.UInt64Value} UInt64Value
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                UInt64Value.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies a UInt64Value message.
+                 * @function verify
+                 * @memberof google.protobuf.UInt64Value
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                UInt64Value.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (!$util.isInteger(message.value) && !(message.value && $util.isInteger(message.value.low) && $util.isInteger(message.value.high)))
+                            return "value: integer|Long expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates a UInt64Value message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.UInt64Value
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.UInt64Value} UInt64Value
+                 */
+                UInt64Value.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.UInt64Value)
+                        return object;
+                    var message = new $root.google.protobuf.UInt64Value();
+                    if (object.value != null)
+                        if ($util.Long)
+                            (message.value = $util.Long.fromValue(object.value)).unsigned = true;
+                        else if (typeof object.value === "string")
+                            message.value = parseInt(object.value, 10);
+                        else if (typeof object.value === "number")
+                            message.value = object.value;
+                        else if (typeof object.value === "object")
+                            message.value = new $util.LongBits(object.value.low >>> 0, object.value.high >>> 0).toNumber(true);
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from a UInt64Value message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.UInt64Value
+                 * @static
+                 * @param {google.protobuf.UInt64Value} message UInt64Value
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                UInt64Value.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        if ($util.Long) {
+                            var long = new $util.Long(0, 0, true);
+                            object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                        } else
+                            object.value = options.longs === String ? "0" : 0;
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (typeof message.value === "number")
+                            object.value = options.longs === String ? String(message.value) : message.value;
+                        else
+                            object.value = options.longs === String ? $util.Long.prototype.toString.call(message.value) : options.longs === Number ? new $util.LongBits(message.value.low >>> 0, message.value.high >>> 0).toNumber(true) : message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this UInt64Value to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.UInt64Value
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                UInt64Value.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return UInt64Value;
+            })();
+    
+            protobuf.Int32Value = (function() {
+    
+                /**
+                 * Properties of an Int32Value.
+                 * @memberof google.protobuf
+                 * @interface IInt32Value
+                 * @property {number|null} [value] Int32Value value
+                 */
+    
+                /**
+                 * Constructs a new Int32Value.
+                 * @memberof google.protobuf
+                 * @classdesc Represents an Int32Value.
+                 * @implements IInt32Value
+                 * @constructor
+                 * @param {google.protobuf.IInt32Value=} [properties] Properties to set
+                 */
+                function Int32Value(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * Int32Value value.
+                 * @member {number} value
+                 * @memberof google.protobuf.Int32Value
+                 * @instance
+                 */
+                Int32Value.prototype.value = 0;
+    
+                /**
+                 * Creates a new Int32Value instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.Int32Value
+                 * @static
+                 * @param {google.protobuf.IInt32Value=} [properties] Properties to set
+                 * @returns {google.protobuf.Int32Value} Int32Value instance
+                 */
+                Int32Value.create = function create(properties) {
+                    return new Int32Value(properties);
+                };
+    
+                /**
+                 * Encodes the specified Int32Value message. Does not implicitly {@link google.protobuf.Int32Value.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.Int32Value
+                 * @static
+                 * @param {google.protobuf.IInt32Value} message Int32Value message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                Int32Value.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 0 =*/8).int32(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified Int32Value message, length delimited. Does not implicitly {@link google.protobuf.Int32Value.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.Int32Value
+                 * @static
+                 * @param {google.protobuf.IInt32Value} message Int32Value message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                Int32Value.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes an Int32Value message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.Int32Value
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.Int32Value} Int32Value
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                Int32Value.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Int32Value();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.int32();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes an Int32Value message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.Int32Value
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.Int32Value} Int32Value
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                Int32Value.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies an Int32Value message.
+                 * @function verify
+                 * @memberof google.protobuf.Int32Value
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                Int32Value.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (!$util.isInteger(message.value))
+                            return "value: integer expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates an Int32Value message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.Int32Value
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.Int32Value} Int32Value
+                 */
+                Int32Value.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.Int32Value)
+                        return object;
+                    var message = new $root.google.protobuf.Int32Value();
+                    if (object.value != null)
+                        message.value = object.value | 0;
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from an Int32Value message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.Int32Value
+                 * @static
+                 * @param {google.protobuf.Int32Value} message Int32Value
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                Int32Value.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        object.value = 0;
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        object.value = message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this Int32Value to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.Int32Value
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                Int32Value.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return Int32Value;
+            })();
+    
+            protobuf.UInt32Value = (function() {
+    
+                /**
+                 * Properties of a UInt32Value.
+                 * @memberof google.protobuf
+                 * @interface IUInt32Value
+                 * @property {number|null} [value] UInt32Value value
+                 */
+    
+                /**
+                 * Constructs a new UInt32Value.
+                 * @memberof google.protobuf
+                 * @classdesc Represents a UInt32Value.
+                 * @implements IUInt32Value
+                 * @constructor
+                 * @param {google.protobuf.IUInt32Value=} [properties] Properties to set
+                 */
+                function UInt32Value(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * UInt32Value value.
+                 * @member {number} value
+                 * @memberof google.protobuf.UInt32Value
+                 * @instance
+                 */
+                UInt32Value.prototype.value = 0;
+    
+                /**
+                 * Creates a new UInt32Value instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.UInt32Value
+                 * @static
+                 * @param {google.protobuf.IUInt32Value=} [properties] Properties to set
+                 * @returns {google.protobuf.UInt32Value} UInt32Value instance
+                 */
+                UInt32Value.create = function create(properties) {
+                    return new UInt32Value(properties);
+                };
+    
+                /**
+                 * Encodes the specified UInt32Value message. Does not implicitly {@link google.protobuf.UInt32Value.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.UInt32Value
+                 * @static
+                 * @param {google.protobuf.IUInt32Value} message UInt32Value message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                UInt32Value.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified UInt32Value message, length delimited. Does not implicitly {@link google.protobuf.UInt32Value.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.UInt32Value
+                 * @static
+                 * @param {google.protobuf.IUInt32Value} message UInt32Value message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                UInt32Value.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes a UInt32Value message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.UInt32Value
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.UInt32Value} UInt32Value
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                UInt32Value.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.UInt32Value();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.uint32();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes a UInt32Value message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.UInt32Value
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.UInt32Value} UInt32Value
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                UInt32Value.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies a UInt32Value message.
+                 * @function verify
+                 * @memberof google.protobuf.UInt32Value
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                UInt32Value.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (!$util.isInteger(message.value))
+                            return "value: integer expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates a UInt32Value message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.UInt32Value
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.UInt32Value} UInt32Value
+                 */
+                UInt32Value.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.UInt32Value)
+                        return object;
+                    var message = new $root.google.protobuf.UInt32Value();
+                    if (object.value != null)
+                        message.value = object.value >>> 0;
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from a UInt32Value message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.UInt32Value
+                 * @static
+                 * @param {google.protobuf.UInt32Value} message UInt32Value
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                UInt32Value.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        object.value = 0;
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        object.value = message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this UInt32Value to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.UInt32Value
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                UInt32Value.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return UInt32Value;
+            })();
+    
+            protobuf.BoolValue = (function() {
+    
+                /**
+                 * Properties of a BoolValue.
+                 * @memberof google.protobuf
+                 * @interface IBoolValue
+                 * @property {boolean|null} [value] BoolValue value
+                 */
+    
+                /**
+                 * Constructs a new BoolValue.
+                 * @memberof google.protobuf
+                 * @classdesc Represents a BoolValue.
+                 * @implements IBoolValue
+                 * @constructor
+                 * @param {google.protobuf.IBoolValue=} [properties] Properties to set
+                 */
+                function BoolValue(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * BoolValue value.
+                 * @member {boolean} value
+                 * @memberof google.protobuf.BoolValue
+                 * @instance
+                 */
+                BoolValue.prototype.value = false;
+    
+                /**
+                 * Creates a new BoolValue instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.BoolValue
+                 * @static
+                 * @param {google.protobuf.IBoolValue=} [properties] Properties to set
+                 * @returns {google.protobuf.BoolValue} BoolValue instance
+                 */
+                BoolValue.create = function create(properties) {
+                    return new BoolValue(properties);
+                };
+    
+                /**
+                 * Encodes the specified BoolValue message. Does not implicitly {@link google.protobuf.BoolValue.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.BoolValue
+                 * @static
+                 * @param {google.protobuf.IBoolValue} message BoolValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                BoolValue.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 0 =*/8).bool(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified BoolValue message, length delimited. Does not implicitly {@link google.protobuf.BoolValue.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.BoolValue
+                 * @static
+                 * @param {google.protobuf.IBoolValue} message BoolValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                BoolValue.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes a BoolValue message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.BoolValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.BoolValue} BoolValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                BoolValue.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.BoolValue();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.bool();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes a BoolValue message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.BoolValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.BoolValue} BoolValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                BoolValue.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies a BoolValue message.
+                 * @function verify
+                 * @memberof google.protobuf.BoolValue
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                BoolValue.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (typeof message.value !== "boolean")
+                            return "value: boolean expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates a BoolValue message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.BoolValue
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.BoolValue} BoolValue
+                 */
+                BoolValue.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.BoolValue)
+                        return object;
+                    var message = new $root.google.protobuf.BoolValue();
+                    if (object.value != null)
+                        message.value = Boolean(object.value);
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from a BoolValue message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.BoolValue
+                 * @static
+                 * @param {google.protobuf.BoolValue} message BoolValue
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                BoolValue.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        object.value = false;
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        object.value = message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this BoolValue to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.BoolValue
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                BoolValue.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return BoolValue;
+            })();
+    
+            protobuf.StringValue = (function() {
+    
+                /**
+                 * Properties of a StringValue.
+                 * @memberof google.protobuf
+                 * @interface IStringValue
+                 * @property {string|null} [value] StringValue value
+                 */
+    
+                /**
+                 * Constructs a new StringValue.
+                 * @memberof google.protobuf
+                 * @classdesc Represents a StringValue.
+                 * @implements IStringValue
+                 * @constructor
+                 * @param {google.protobuf.IStringValue=} [properties] Properties to set
+                 */
+                function StringValue(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * StringValue value.
+                 * @member {string} value
+                 * @memberof google.protobuf.StringValue
+                 * @instance
+                 */
+                StringValue.prototype.value = "";
+    
+                /**
+                 * Creates a new StringValue instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.StringValue
+                 * @static
+                 * @param {google.protobuf.IStringValue=} [properties] Properties to set
+                 * @returns {google.protobuf.StringValue} StringValue instance
+                 */
+                StringValue.create = function create(properties) {
+                    return new StringValue(properties);
+                };
+    
+                /**
+                 * Encodes the specified StringValue message. Does not implicitly {@link google.protobuf.StringValue.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.StringValue
+                 * @static
+                 * @param {google.protobuf.IStringValue} message StringValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                StringValue.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 2 =*/10).string(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified StringValue message, length delimited. Does not implicitly {@link google.protobuf.StringValue.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.StringValue
+                 * @static
+                 * @param {google.protobuf.IStringValue} message StringValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                StringValue.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes a StringValue message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.StringValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.StringValue} StringValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                StringValue.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.StringValue();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.string();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes a StringValue message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.StringValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.StringValue} StringValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                StringValue.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies a StringValue message.
+                 * @function verify
+                 * @memberof google.protobuf.StringValue
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                StringValue.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (!$util.isString(message.value))
+                            return "value: string expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates a StringValue message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.StringValue
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.StringValue} StringValue
+                 */
+                StringValue.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.StringValue)
+                        return object;
+                    var message = new $root.google.protobuf.StringValue();
+                    if (object.value != null)
+                        message.value = String(object.value);
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from a StringValue message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.StringValue
+                 * @static
+                 * @param {google.protobuf.StringValue} message StringValue
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                StringValue.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        object.value = "";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        object.value = message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this StringValue to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.StringValue
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                StringValue.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return StringValue;
+            })();
+    
+            protobuf.BytesValue = (function() {
+    
+                /**
+                 * Properties of a BytesValue.
+                 * @memberof google.protobuf
+                 * @interface IBytesValue
+                 * @property {Uint8Array|null} [value] BytesValue value
+                 */
+    
+                /**
+                 * Constructs a new BytesValue.
+                 * @memberof google.protobuf
+                 * @classdesc Represents a BytesValue.
+                 * @implements IBytesValue
+                 * @constructor
+                 * @param {google.protobuf.IBytesValue=} [properties] Properties to set
+                 */
+                function BytesValue(properties) {
+                    if (properties)
+                        for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                            if (properties[keys[i]] != null)
+                                this[keys[i]] = properties[keys[i]];
+                }
+    
+                /**
+                 * BytesValue value.
+                 * @member {Uint8Array} value
+                 * @memberof google.protobuf.BytesValue
+                 * @instance
+                 */
+                BytesValue.prototype.value = $util.newBuffer([]);
+    
+                /**
+                 * Creates a new BytesValue instance using the specified properties.
+                 * @function create
+                 * @memberof google.protobuf.BytesValue
+                 * @static
+                 * @param {google.protobuf.IBytesValue=} [properties] Properties to set
+                 * @returns {google.protobuf.BytesValue} BytesValue instance
+                 */
+                BytesValue.create = function create(properties) {
+                    return new BytesValue(properties);
+                };
+    
+                /**
+                 * Encodes the specified BytesValue message. Does not implicitly {@link google.protobuf.BytesValue.verify|verify} messages.
+                 * @function encode
+                 * @memberof google.protobuf.BytesValue
+                 * @static
+                 * @param {google.protobuf.IBytesValue} message BytesValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                BytesValue.encode = function encode(message, writer) {
+                    if (!writer)
+                        writer = $Writer.create();
+                    if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                        writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.value);
+                    return writer;
+                };
+    
+                /**
+                 * Encodes the specified BytesValue message, length delimited. Does not implicitly {@link google.protobuf.BytesValue.verify|verify} messages.
+                 * @function encodeDelimited
+                 * @memberof google.protobuf.BytesValue
+                 * @static
+                 * @param {google.protobuf.IBytesValue} message BytesValue message or plain object to encode
+                 * @param {$protobuf.Writer} [writer] Writer to encode to
+                 * @returns {$protobuf.Writer} Writer
+                 */
+                BytesValue.encodeDelimited = function encodeDelimited(message, writer) {
+                    return this.encode(message, writer).ldelim();
+                };
+    
+                /**
+                 * Decodes a BytesValue message from the specified reader or buffer.
+                 * @function decode
+                 * @memberof google.protobuf.BytesValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @param {number} [length] Message length if known beforehand
+                 * @returns {google.protobuf.BytesValue} BytesValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                BytesValue.decode = function decode(reader, length) {
+                    if (!(reader instanceof $Reader))
+                        reader = $Reader.create(reader);
+                    var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.BytesValue();
+                    while (reader.pos < end) {
+                        var tag = reader.uint32();
+                        switch (tag >>> 3) {
+                        case 1:
+                            message.value = reader.bytes();
+                            break;
+                        default:
+                            reader.skipType(tag & 7);
+                            break;
+                        }
+                    }
+                    return message;
+                };
+    
+                /**
+                 * Decodes a BytesValue message from the specified reader or buffer, length delimited.
+                 * @function decodeDelimited
+                 * @memberof google.protobuf.BytesValue
+                 * @static
+                 * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+                 * @returns {google.protobuf.BytesValue} BytesValue
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                BytesValue.decodeDelimited = function decodeDelimited(reader) {
+                    if (!(reader instanceof $Reader))
+                        reader = new $Reader(reader);
+                    return this.decode(reader, reader.uint32());
+                };
+    
+                /**
+                 * Verifies a BytesValue message.
+                 * @function verify
+                 * @memberof google.protobuf.BytesValue
+                 * @static
+                 * @param {Object.<string,*>} message Plain object to verify
+                 * @returns {string|null} `null` if valid, otherwise the reason why it is not
+                 */
+                BytesValue.verify = function verify(message) {
+                    if (typeof message !== "object" || message === null)
+                        return "object expected";
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        if (!(message.value && typeof message.value.length === "number" || $util.isString(message.value)))
+                            return "value: buffer expected";
+                    return null;
+                };
+    
+                /**
+                 * Creates a BytesValue message from a plain object. Also converts values to their respective internal types.
+                 * @function fromObject
+                 * @memberof google.protobuf.BytesValue
+                 * @static
+                 * @param {Object.<string,*>} object Plain object
+                 * @returns {google.protobuf.BytesValue} BytesValue
+                 */
+                BytesValue.fromObject = function fromObject(object) {
+                    if (object instanceof $root.google.protobuf.BytesValue)
+                        return object;
+                    var message = new $root.google.protobuf.BytesValue();
+                    if (object.value != null)
+                        if (typeof object.value === "string")
+                            $util.base64.decode(object.value, message.value = $util.newBuffer($util.base64.length(object.value)), 0);
+                        else if (object.value.length)
+                            message.value = object.value;
+                    return message;
+                };
+    
+                /**
+                 * Creates a plain object from a BytesValue message. Also converts values to other types if specified.
+                 * @function toObject
+                 * @memberof google.protobuf.BytesValue
+                 * @static
+                 * @param {google.protobuf.BytesValue} message BytesValue
+                 * @param {$protobuf.IConversionOptions} [options] Conversion options
+                 * @returns {Object.<string,*>} Plain object
+                 */
+                BytesValue.toObject = function toObject(message, options) {
+                    if (!options)
+                        options = {};
+                    var object = {};
+                    if (options.defaults)
+                        if (options.bytes === String)
+                            object.value = "";
+                        else {
+                            object.value = [];
+                            if (options.bytes !== Array)
+                                object.value = $util.newBuffer(object.value);
+                        }
+                    if (message.value != null && message.hasOwnProperty("value"))
+                        object.value = options.bytes === String ? $util.base64.encode(message.value, 0, message.value.length) : options.bytes === Array ? Array.prototype.slice.call(message.value) : message.value;
+                    return object;
+                };
+    
+                /**
+                 * Converts this BytesValue to JSON.
+                 * @function toJSON
+                 * @memberof google.protobuf.BytesValue
+                 * @instance
+                 * @returns {Object.<string,*>} JSON object
+                 */
+                BytesValue.prototype.toJSON = function toJSON() {
+                    return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+    
+                return BytesValue;
             })();
     
             protobuf.FieldMask = (function() {

@@ -1,7 +1,7 @@
 {
   "name": "@google-cloud/speech",
   "description": "Cloud Speech Client Library for Node.js",
-  "version": "4.4.0",
+  "version": "4.9.0",
   "license": "Apache-2.0",
   "author": "Google Inc.",
   "engines": {
@@ -43,14 +43,12 @@
     "pretest": "npm run compile",
     "prelint": "cd samples; npm link ../; npm install",
     "clean": "gts clean",
-    "precompile": "gts clean",
-    "api-extractor": "api-extractor run --local",
-    "api-documenter": "api-documenter yaml --input-folder=temp"
+    "precompile": "gts clean"
   },
   "dependencies": {
     "@google-cloud/common": "^3.0.0",
     "@types/pumpify": "^1.4.1",
-    "google-gax": "^2.9.2",
+    "google-gax": "^2.24.1",
     "protobufjs": "^6.8.6",
     "pumpify": "^2.0.0",
     "stream-events": "^1.0.4",
@@ -58,7 +56,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^8.0.0",
-    "@types/node": "^12.0.0",
+    "@types/node": "^14.0.0",
     "@types/sinon": "^10.0.0",
     "c8": "^7.0.0",
     "codecov": "^3.0.2",
@@ -70,12 +68,10 @@
     "mocha": "^8.0.0",
     "null-loader": "^4.0.0",
     "pack-n-play": "^1.0.0-2",
-    "sinon": "^10.0.0",
+    "sinon": "^11.0.0",
     "ts-loader": "^8.0.0",
     "typescript": "^3.8.3",
     "webpack": "^5.0.0",
-    "webpack-cli": "^4.0.0",
-    "@microsoft/api-documenter": "^7.8.10",
-    "@microsoft/api-extractor": "^7.8.10"
+    "webpack-cli": "^4.0.0"
   }
 }

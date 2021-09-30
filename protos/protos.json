@@ -111,6 +111,28 @@
                           "options": {
                             "(google.api.field_behavior)": "REQUIRED"
                           }
+                        },
+                        "outputConfig": {
+                          "type": "TranscriptOutputConfig",
+                          "id": 4,
+                          "options": {
+                            "(google.api.field_behavior)": "OPTIONAL"
+                          }
+                        }
+                      }
+                    },
+                    "TranscriptOutputConfig": {
+                      "oneofs": {
+                        "outputType": {
+                          "oneof": [
+                            "gcsUri"
+                          ]
+                        }
+                      },
+                      "fields": {
+                        "gcsUri": {
+                          "type": "string",
+                          "id": 1
                         }
                       }
                     },
@@ -249,8 +271,8 @@
                           "type": "int32",
                           "id": 5,
                           "options": {
-                            "(google.api.field_behavior)": "OUTPUT_ONLY",
-                            "deprecated": true
+                            "deprecated": true,
+                            "(google.api.field_behavior)": "OUTPUT_ONLY"
                           }
                         }
                       }
@@ -367,6 +389,10 @@
                           "rule": "repeated",
                           "type": "SpeechRecognitionResult",
                           "id": 2
+                        },
+                        "totalBilledTime": {
+                          "type": "google.protobuf.Duration",
+                          "id": 3
                         }
                       }
                     },
@@ -376,6 +402,10 @@
                           "rule": "repeated",
                           "type": "SpeechRecognitionResult",
                           "id": 2
+                        },
+                        "totalBilledTime": {
+                          "type": "google.protobuf.Duration",
+                          "id": 3
                         }
                       }
                     },
@@ -392,6 +422,13 @@
                         "lastUpdateTime": {
                           "type": "google.protobuf.Timestamp",
                           "id": 3
+                        },
+                        "uri": {
+                          "type": "string",
+                          "id": 4,
+                          "options": {
+                            "(google.api.field_behavior)": "OUTPUT_ONLY"
+                          }
                         }
                       }
                     },
@@ -409,6 +446,10 @@
                         "speechEventType": {
                           "type": "SpeechEventType",
                           "id": 4
+                        },
+                        "totalBilledTime": {
+                          "type": "google.protobuf.Duration",
+                          "id": 5
                         }
                       },
                       "nested": {
@@ -718,6 +759,10 @@
                           "type": "SpeechAdaptation",
                           "id": 20
                         },
+                        "transcriptNormalization": {
+                          "type": "TranscriptNormalization",
+                          "id": 24
+                        },
                         "speechContexts": {
                           "rule": "repeated",
                           "type": "SpeechContext",
@@ -734,6 +779,14 @@
                         "enableAutomaticPunctuation": {
                           "type": "bool",
                           "id": 11
+                        },
+                        "enableSpokenPunctuation": {
+                          "type": "google.protobuf.BoolValue",
+                          "id": 22
+                        },
+                        "enableSpokenEmojis": {
+                          "type": "google.protobuf.BoolValue",
+                          "id": 23
                         },
                         "enableSpeakerDiarization": {
                           "type": "bool",
@@ -777,7 +830,8 @@
                             "AMR_WB": 5,
                             "OGG_OPUS": 6,
                             "SPEEX_WITH_HEADER_BYTE": 7,
-                            "MP3": 8
+                            "MP3": 8,
+                            "WEBM_OPUS": 9
                           }
                         }
                       }
@@ -929,6 +983,10 @@
                           "rule": "repeated",
                           "type": "SpeechRecognitionResult",
                           "id": 2
+                        },
+                        "totalBilledTime": {
+                          "type": "google.protobuf.Duration",
+                          "id": 3
                         }
                       }
                     },
@@ -938,6 +996,10 @@
                           "rule": "repeated",
                           "type": "SpeechRecognitionResult",
                           "id": 2
+                        },
+                        "totalBilledTime": {
+                          "type": "google.protobuf.Duration",
+                          "id": 3
                         },
                         "outputConfig": {
                           "type": "TranscriptOutputConfig",
@@ -993,6 +1055,10 @@
                         "speechEventType": {
                           "type": "SpeechEventType",
                           "id": 4
+                        },
+                        "totalBilledTime": {
+                          "type": "google.protobuf.Duration",
+                          "id": 5
                         }
                       },
                       "nested": {
@@ -1176,12 +1242,42 @@
                         "phraseSetReferences": {
                           "rule": "repeated",
                           "type": "string",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.resource_reference).type": "speech.googleapis.com/PhraseSet"
+                          }
                         },
                         "customClasses": {
                           "rule": "repeated",
                           "type": "CustomClass",
                           "id": 3
+                        }
+                      }
+                    },
+                    "TranscriptNormalization": {
+                      "fields": {
+                        "entries": {
+                          "rule": "repeated",
+                          "type": "Entry",
+                          "id": 1
+                        }
+                      },
+                      "nested": {
+                        "Entry": {
+                          "fields": {
+                            "search": {
+                              "type": "string",
+                              "id": 1
+                            },
+                            "replace": {
+                              "type": "string",
+                              "id": 2
+                            },
+                            "caseSensitive": {
+                              "type": "bool",
+                              "id": 3
+                            }
+                          }
                         }
                       }
                     },
@@ -1393,7 +1489,10 @@
                         },
                         "phraseSetId": {
                           "type": "string",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "phraseSet": {
                           "type": "PhraseSet",
@@ -1488,7 +1587,10 @@
                         },
                         "customClassId": {
                           "type": "string",
-                          "id": 2
+                          "id": 2,
+                          "options": {
+                            "(google.api.field_behavior)": "REQUIRED"
+                          }
                         },
                         "customClass": {
                           "type": "CustomClass",
@@ -2717,6 +2819,78 @@
                 "nanos": {
                   "type": "int32",
                   "id": 2
+                }
+              }
+            },
+            "DoubleValue": {
+              "fields": {
+                "value": {
+                  "type": "double",
+                  "id": 1
+                }
+              }
+            },
+            "FloatValue": {
+              "fields": {
+                "value": {
+                  "type": "float",
+                  "id": 1
+                }
+              }
+            },
+            "Int64Value": {
+              "fields": {
+                "value": {
+                  "type": "int64",
+                  "id": 1
+                }
+              }
+            },
+            "UInt64Value": {
+              "fields": {
+                "value": {
+                  "type": "uint64",
+                  "id": 1
+                }
+              }
+            },
+            "Int32Value": {
+              "fields": {
+                "value": {
+                  "type": "int32",
+                  "id": 1
+                }
+              }
+            },
+            "UInt32Value": {
+              "fields": {
+                "value": {
+                  "type": "uint32",
+                  "id": 1
+                }
+              }
+            },
+            "BoolValue": {
+              "fields": {
+                "value": {
+                  "type": "bool",
+                  "id": 1
+                }
+              }
+            },
+            "StringValue": {
+              "fields": {
+                "value": {
+                  "type": "string",
+                  "id": 1
+                }
+              }
+            },
+            "BytesValue": {
+              "fields": {
+                "value": {
+                  "type": "bytes",
+                  "id": 1
                 }
               }
             },

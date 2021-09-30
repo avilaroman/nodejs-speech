@@ -26,11 +26,11 @@ import {
   PaginationCallback,
   GaxCall,
 } from 'google-gax';
-import * as path from 'path';
 
 import {Transform} from 'stream';
 import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
+import jsonProtos = require('../../protos/protos.json');
 /**
  * Client JSON configuration object, loaded from
  * `src/v1p1beta1/adaptation_client_config.json`.
@@ -48,6 +48,7 @@ const version = require('../../../package.json').version;
 export class AdaptationClient {
   private _terminated = false;
   private _opts: ClientOptions;
+  private _providedCustomServicePath: boolean;
   private _gaxModule: typeof gax | typeof gax.fallback;
   private _gaxGrpc: gax.GrpcClient | gax.fallback.GrpcClient;
   private _protos: {};
@@ -59,6 +60,7 @@ export class AdaptationClient {
     longrunning: {},
     batching: {},
   };
+  warn: (code: string, message: string, warnType?: string) => void;
   innerApiCalls: {[name: string]: Function};
   pathTemplates: {[name: string]: gax.PathTemplate};
   adaptationStub?: Promise<{[name: string]: Function}>;
@@ -102,6 +104,9 @@ export class AdaptationClient {
     const staticMembers = this.constructor as typeof AdaptationClient;
     const servicePath =
       opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
+    this._providedCustomServicePath = !!(
+      opts?.servicePath || opts?.apiEndpoint
+    );
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
     const fallback =
@@ -126,6 +131,12 @@ export class AdaptationClient {
     // Save the auth object to the client, for use by other methods.
     this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
 
+    // Set useJWTAccessWithScope on the auth object.
+    this.auth.useJWTAccessWithScope = true;
+
+    // Set defaultServicePath on the auth object.
+    this.auth.defaultServicePath = staticMembers.servicePath;
+
     // Set the default scopes in auth client if needed.
     if (servicePath === staticMembers.servicePath) {
       this.auth.defaultScopes = staticMembers.scopes;
@@ -140,27 +151,14 @@ export class AdaptationClient {
     }
     if (!opts.fallback) {
       clientHeader.push(`grpc/${this._gaxGrpc.grpcVersion}`);
+    } else if (opts.fallback === 'rest') {
+      clientHeader.push(`rest/${this._gaxGrpc.grpcVersion}`);
     }
     if (opts.libName && opts.libVersion) {
       clientHeader.push(`${opts.libName}/${opts.libVersion}`);
     }
     // Load the applicable protos.
-    // For Node.js, pass the path to JSON proto file.
-    // For browsers, pass the JSON content.
-
-    const nodejsProtoPath = path.join(
-      __dirname,
-      '..',
-      '..',
-      'protos',
-      'protos.json'
-    );
-    this._protos = this._gaxGrpc.loadProto(
-      opts.fallback
-        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('../../protos/protos.json')
-        : nodejsProtoPath
-    );
+    this._protos = this._gaxGrpc.loadProtoJSON(jsonProtos);
 
     // This API contains "path templates"; forward-slash-separated
     // identifiers to uniquely identify resources within the API.
@@ -208,6 +206,9 @@ export class AdaptationClient {
     // of calling the API is handled in `google-gax`, with this code
     // merely providing the destination and request information.
     this.innerApiCalls = {};
+
+    // Add a warn function to the client constructor so it can be easily tested.
+    this.warn = gax.warn;
   }
 
   /**
@@ -236,7 +237,8 @@ export class AdaptationClient {
           )
         : // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (this._protos as any).google.cloud.speech.v1p1beta1.Adaptation,
-      this._opts
+      this._opts,
+      this._providedCustomServicePath
     ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
@@ -255,13 +257,14 @@ export class AdaptationClient {
     ];
     for (const methodName of adaptationStubMethods) {
       const callPromise = this.adaptationStub.then(
-        stub => (...args: Array<{}>) => {
-          if (this._terminated) {
-            return Promise.reject('The client has already been closed.');
-          }
-          const func = stub[methodName];
-          return func.apply(stub, args);
-        },
+        stub =>
+          (...args: Array<{}>) => {
+            if (this._terminated) {
+              return Promise.reject('The client has already been closed.');
+            }
+            const func = stub[methodName];
+            return func.apply(stub, args);
+          },
         (err: Error | null | undefined) => () => {
           throw err;
         }
@@ -334,7 +337,7 @@ export class AdaptationClient {
   // -- Service calls --
   // -------------------
   createPhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.ICreatePhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.ICreatePhraseSetRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -376,7 +379,7 @@ export class AdaptationClient {
    *   Format:
    *   {api_version}/projects/{project}/locations/{location}/phraseSets
    * @param {string} request.phraseSetId
-   *   The ID to use for the phrase set, which will become the final
+   *   Required. The ID to use for the phrase set, which will become the final
    *   component of the phrase set's resource name.
    *
    *   This value should be 4-63 characters, and valid characters
@@ -394,7 +397,7 @@ export class AdaptationClient {
    * const [response] = await client.createPhraseSet(request);
    */
   createPhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.ICreatePhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.ICreatePhraseSetRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -429,16 +432,15 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
     this.initialize();
     return this.innerApiCalls.createPhraseSet(request, options, callback);
   }
   getPhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.IGetPhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IGetPhraseSetRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -488,7 +490,7 @@ export class AdaptationClient {
    * const [response] = await client.getPhraseSet(request);
    */
   getPhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.IGetPhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IGetPhraseSetRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -523,16 +525,15 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
     this.initialize();
     return this.innerApiCalls.getPhraseSet(request, options, callback);
   }
   updatePhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.IUpdatePhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IUpdatePhraseSetRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -586,7 +587,7 @@ export class AdaptationClient {
    * const [response] = await client.updatePhraseSet(request);
    */
   updatePhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.IUpdatePhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IUpdatePhraseSetRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -621,16 +622,15 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'phrase_set.name': request.phraseSet!.name || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'phrase_set.name': request.phraseSet!.name || '',
+      });
     this.initialize();
     return this.innerApiCalls.updatePhraseSet(request, options, callback);
   }
   deletePhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.IDeletePhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IDeletePhraseSetRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -680,7 +680,7 @@ export class AdaptationClient {
    * const [response] = await client.deletePhraseSet(request);
    */
   deletePhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.IDeletePhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IDeletePhraseSetRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -715,16 +715,15 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
     this.initialize();
     return this.innerApiCalls.deletePhraseSet(request, options, callback);
   }
   createCustomClass(
-    request: protos.google.cloud.speech.v1p1beta1.ICreateCustomClassRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.ICreateCustomClassRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -767,7 +766,7 @@ export class AdaptationClient {
    *   Format:
    *   {api_version}/projects/{project}/locations/{location}/customClasses
    * @param {string} request.customClassId
-   *   The ID to use for the custom class, which will become the final
+   *   Required. The ID to use for the custom class, which will become the final
    *   component of the custom class' resource name.
    *
    *   This value should be 4-63 characters, and valid characters
@@ -785,7 +784,7 @@ export class AdaptationClient {
    * const [response] = await client.createCustomClass(request);
    */
   createCustomClass(
-    request: protos.google.cloud.speech.v1p1beta1.ICreateCustomClassRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.ICreateCustomClassRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -823,16 +822,15 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
     this.initialize();
     return this.innerApiCalls.createCustomClass(request, options, callback);
   }
   getCustomClass(
-    request: protos.google.cloud.speech.v1p1beta1.IGetCustomClassRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IGetCustomClassRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -882,7 +880,7 @@ export class AdaptationClient {
    * const [response] = await client.getCustomClass(request);
    */
   getCustomClass(
-    request: protos.google.cloud.speech.v1p1beta1.IGetCustomClassRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IGetCustomClassRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -917,16 +915,15 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
     this.initialize();
     return this.innerApiCalls.getCustomClass(request, options, callback);
   }
   updateCustomClass(
-    request: protos.google.cloud.speech.v1p1beta1.IUpdateCustomClassRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IUpdateCustomClassRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -983,7 +980,7 @@ export class AdaptationClient {
    * const [response] = await client.updateCustomClass(request);
    */
   updateCustomClass(
-    request: protos.google.cloud.speech.v1p1beta1.IUpdateCustomClassRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IUpdateCustomClassRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1021,16 +1018,15 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      'custom_class.name': request.customClass!.name || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        'custom_class.name': request.customClass!.name || '',
+      });
     this.initialize();
     return this.innerApiCalls.updateCustomClass(request, options, callback);
   }
   deleteCustomClass(
-    request: protos.google.cloud.speech.v1p1beta1.IDeleteCustomClassRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IDeleteCustomClassRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1083,7 +1079,7 @@ export class AdaptationClient {
    * const [response] = await client.deleteCustomClass(request);
    */
   deleteCustomClass(
-    request: protos.google.cloud.speech.v1p1beta1.IDeleteCustomClassRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IDeleteCustomClassRequest,
     optionsOrCallback?:
       | CallOptions
       | Callback<
@@ -1121,17 +1117,16 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      name: request.name || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        name: request.name || '',
+      });
     this.initialize();
     return this.innerApiCalls.deleteCustomClass(request, options, callback);
   }
 
   listPhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.IListPhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IListPhraseSetRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1195,7 +1190,7 @@ export class AdaptationClient {
    *   for more details and examples.
    */
   listPhraseSet(
-    request: protos.google.cloud.speech.v1p1beta1.IListPhraseSetRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IListPhraseSetRequest,
     optionsOrCallback?:
       | CallOptions
       | PaginationCallback<
@@ -1230,11 +1225,10 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
     this.initialize();
     return this.innerApiCalls.listPhraseSet(request, options, callback);
   }
@@ -1278,11 +1272,10 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listPhraseSet.createStream(
@@ -1337,22 +1330,21 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listPhraseSet.asyncIterate(
       this.innerApiCalls['listPhraseSet'] as GaxCall,
-      (request as unknown) as RequestType,
+      request as unknown as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.cloud.speech.v1p1beta1.IPhraseSet>;
   }
   listCustomClasses(
-    request: protos.google.cloud.speech.v1p1beta1.IListCustomClassesRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IListCustomClassesRequest,
     options?: CallOptions
   ): Promise<
     [
@@ -1416,7 +1408,7 @@ export class AdaptationClient {
    *   for more details and examples.
    */
   listCustomClasses(
-    request: protos.google.cloud.speech.v1p1beta1.IListCustomClassesRequest,
+    request?: protos.google.cloud.speech.v1p1beta1.IListCustomClassesRequest,
     optionsOrCallback?:
       | CallOptions
       | PaginationCallback<
@@ -1451,11 +1443,10 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
     this.initialize();
     return this.innerApiCalls.listCustomClasses(request, options, callback);
   }
@@ -1499,11 +1490,10 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listCustomClasses.createStream(
@@ -1558,17 +1548,16 @@ export class AdaptationClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    options.otherArgs.headers[
-      'x-goog-request-params'
-    ] = gax.routingHeader.fromParams({
-      parent: request.parent || '',
-    });
+    options.otherArgs.headers['x-goog-request-params'] =
+      gax.routingHeader.fromParams({
+        parent: request.parent || '',
+      });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listCustomClasses.asyncIterate(
       this.innerApiCalls['listCustomClasses'] as GaxCall,
-      (request as unknown) as RequestType,
+      request as unknown as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.cloud.speech.v1p1beta1.ICustomClass>;
   }
